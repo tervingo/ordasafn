@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { TextField, Button, Box } from '@mui/material';
 
 function WordForm({ onSubmit }) {
   const [word, setWord] = useState('');
@@ -8,23 +8,31 @@ function WordForm({ onSubmit }) {
     e.preventDefault();
     if (word.trim()) {
       onSubmit(word);
-      setWord('');  // Limpiar el campo después de enviar
+      setWord('');  // Clear the field after submitting
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
+    <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', gap: 2 }}>
+      <TextField
         value={word}
         onChange={(e) => setWord(e.target.value)}
-        placeholder="Ingresa una palabra en islandés"
-        aria-label="Palabra en islandés"
+        placeholder="Enter Icelandic word"
+        label="Icelandic word"
+        variant="outlined"
+        size="medium"
+        sx={{ width: '300px' }}
       />
-      <button type="submit">Buscar</button>
-    </form>
+      <Button 
+        type="submit" 
+        variant="contained" 
+        color="primary"
+        size="medium"
+      >
+        Search
+      </Button>
+    </Box>
   );
 }
-
 
 export default WordForm;
