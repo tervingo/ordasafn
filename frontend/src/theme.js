@@ -10,6 +10,8 @@ const theme = createTheme({
         primary: {
           main: grey[600], // This is the default MUI blue
           dark: grey[800], // You can change this to any color you want
+          blue: blue[700],
+          orange: orange[500],
         },
         toggle: {
           on: blue[700],

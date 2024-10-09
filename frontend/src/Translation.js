@@ -13,7 +13,7 @@ function Translation({ word, onTranslate }) {
       const html = await response.text();
       
       // Extract the translation
-      const regex = /<strong>(.+?)<\/strong> are the top translations of/;
+      const regex = /<strong>(.+?)<\/strong> (?:is the translation|are the top translations) of/;
       const match = html.match(regex);
       
       if (match && match[1]) {

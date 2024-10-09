@@ -5,7 +5,7 @@ import {
 } from '@mui/material';
 import theme from './theme';
 
-function InflectionTable({ data, translation }) {
+function InflectionTableNoun({ data, translation }) {
   if (!data || !data[0] || !data[0].bmyndir) {
     return <p>No hay datos de inflexión disponibles.</p>;
   }
@@ -22,32 +22,14 @@ function InflectionTable({ data, translation }) {
 
   return (
   <div>
-       <Box sx={{ 
-        display: 'flex', 
-        flexDirection: 'column', 
-        alignItems: 'center', 
-        width: '100%', 
-        my: 1 
-      }}>
-        <Paper sx={{ 
-          my: 2, 
-          bgcolor: theme.palette.labels.bggreen, 
-          color: theme.palette.labels.tx, 
-          textAlign: 'center', 
-          width: "60%"
-        }} elevation={3}>
+       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', my: 1 }}>
+        <Paper sx={{ my: 2, bgcolor: theme.palette.labels.bggreen, color: theme.palette.labels.tx, textAlign: 'center', width: "60%"}} elevation={3}>
           <Typography variant="h4">
             "{data[0].ord}" ({getCat(data[0].ofl_heiti)} - {getGender(data[0].kyn)})
           </Typography>
         </Paper>
         {translation && (
-          <Paper sx={{ 
-            my: 2, 
-            bgcolor: theme.palette.labels.bgorange, 
-            color: theme.palette.labels.tx, 
-            textAlign: 'center', 
-            width: "60%"
-          }} elevation={3}>
+          <Paper sx={{ my: 2, bgcolor: theme.palette.labels.bgorange, color: theme.palette.labels.tx, textAlign: 'center', width: "60%"}} elevation={3}>
             <Typography variant="h5">
               {translation}
             </Typography>
@@ -78,7 +60,7 @@ function InflectionTable({ data, translation }) {
               fontSize: '1.2rem', // Decrease font size
             },
             '& .MuiTableCell-head': {
-              backgroundColor: 'background.paper',
+              backgroundColor: theme.palette.primary.blue,
               position: 'sticky',
               top: 0,
               zIndex: 1,
@@ -141,4 +123,4 @@ function getCat(cat) {
   }
 }
 
-export default InflectionTable;
+export default InflectionTableNoun;

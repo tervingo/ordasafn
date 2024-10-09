@@ -5,7 +5,9 @@ import { Container, Typography, Box } from '@mui/material';
 import theme from './theme';
 
 import WordForm from './WordForm';
-import InflectionTable from './InflectionTable';
+import InflectionTableNoun from './InflectionTableNoun';
+import InflectionTableAdjective from './InflectionTableAdjective';
+import InflectionTableVerb from './InflectionTableVerb';
 import Translation from './Translation';
 import './ordasafn.css';
 
@@ -34,6 +36,24 @@ function App() {
     setTranslation(translatedText);
   };
 
+  
+  const renderInflectionTable = () => {
+    if (!inflectionData || !inflectionData[0]) return null;
+
+    const category = inflectionData[0].ofl_heiti;
+    switch (category) {
+      case 'nafnorð':
+        return <InflectionTableNoun data={inflectionData} translation={translation} />;
+      case 'lýsingarorð':
+        return <InflectionTableAdjective data={inflectionData} translation={translation} />;
+      case 'sagnorð':
+        return <InflectionTableVerb data={inflectionData} translation={translation} />;
+      default:
+        console.log(`No specific table for category: ${category}`);
+        return null;
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -43,11 +63,17 @@ function App() {
             Icelandic Morphological Information
           </Typography>
         </Box>
+        <Box sx={{ textAlign: 'center', mt: 4, mb: 4 }}>
+          <Typography variant="subtitle2" component="h1" gutterBottom>
+            This tool uses the API provided by <a href="https://bin.arnastofnum.is" target='blank'>Beygingarlýsing íslenks nútímamáls</a> and the output from the <a href="is.glosbe.com" target="blank">Glosbe online dictionary</a>
+          </Typography>
+        </Box>
+
         <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4 }}>
           <WordForm onSubmit={handleSubmit} />
         </Box>
         {searchedWord && <Translation word={searchedWord} onTranslate={handleTranslation} />}
-        {inflectionData && <InflectionTable data={inflectionData} translation={translation} />}
+        {renderInflectionTable()}
       </Container>
     </ThemeProvider>
   );
