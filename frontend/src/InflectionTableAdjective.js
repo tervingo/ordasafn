@@ -91,7 +91,7 @@ function InflectionTableAdjective({ data, translation }) {
         flexDirection: 'column', 
         alignItems: 'center', 
         width: '100%', 
-        my: 1 
+        mb: 10 
       }}>
         <Paper sx={{ 
           my: 2, 

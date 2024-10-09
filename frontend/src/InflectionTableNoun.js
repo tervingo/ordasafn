@@ -22,7 +22,7 @@ function InflectionTableNoun({ data, translation }) {
 
   return (
   <div>
-       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', my: 1 }}>
+       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', mb: 10 }}>
         <Paper sx={{ my: 2, bgcolor: theme.palette.labels.bggreen, color: theme.palette.labels.tx, textAlign: 'center', width: "60%"}} elevation={3}>
           <Typography variant="h4">
             "{data[0].ord}" ({getCat(data[0].ofl_heiti)} - {getGender(data[0].kyn)})

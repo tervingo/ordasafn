@@ -10,6 +10,8 @@ import InflectionTableAdjective from './InflectionTableAdjective';
 import InflectionTableVerb from './InflectionTableVerb';
 import Translation from './Translation';
 import './ordasafn.css';
+import IcelandicFlagIcon from './IcelandicFlagIcon';
+import { alignProperty } from '@mui/material/styles/cssUtils';
 
 function App() {
   const [inflectionData, setInflectionData] = useState(null);
@@ -36,6 +38,11 @@ function App() {
     setTranslation(translatedText);
   };
 
+  const handleClear = () => {
+    setInflectionData(null);
+    setSearchedWord('');
+    setTranslation('');
+  };
   
   const renderInflectionTable = () => {
     if (!inflectionData || !inflectionData[0]) return null;
@@ -58,19 +65,42 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container maxWidth="lg">
-        <Box sx={{ textAlign: 'center', mt: 4, mb: 4 }}>
+      <Box sx={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center', 
+        mt: 4, 
+        mb: 2 
+      }}>
+        <Box sx={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center',
+          width: '100%'
+        }}>
+          <IcelandicFlagIcon sx={{ fontSize: 40, marginRight: 2 }} />
           <Typography variant="h3" component="h1" gutterBottom>
             Icelandic Morphological Information
           </Typography>
         </Box>
-        <Box sx={{ textAlign: 'center', mt: 4, mb: 4 }}>
-          <Typography variant="subtitle2" component="h1" gutterBottom>
-            This tool uses the API provided by <a href="https://bin.arnastofnum.is" target='blank'>Beygingarlýsing íslenks nútímamáls</a> and the output from the <a href="is.glosbe.com" target="blank">Glosbe online dictionary</a>
+      </Box>      
+        <Box sx={{ textAlign: 'center', mt: 2, mb: 6 }}>
+          <Typography variant="subtitle2" component="h1" gutterBottom sx={{ 
+              color: theme.palette.labels.subtitle, // Change this to your desired color
+              '& a': {
+                color: theme.palette.link.default, // Change link color if needed
+                textDecoration: 'none',
+                '&:hover': {
+                  textDecoration: 'underline',
+                },
+              },
+            }} >
+            This tool uses the API provided by <a href="https://bin.arnastofnun.is" target='blank'>Beygingarlýsing íslenks nútímamáls</a> and the output from the <a href="https://is.glosbe.com" target="blank">Glosbe online dictionary</a>
           </Typography>
         </Box>
 
         <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4 }}>
-          <WordForm onSubmit={handleSubmit} />
+          <WordForm onSubmit={handleSubmit} onClear={handleClear} />
         </Box>
         {searchedWord && <Translation word={searchedWord} onTranslate={handleTranslation} />}
         {renderInflectionTable()}

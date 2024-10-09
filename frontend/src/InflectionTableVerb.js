@@ -48,7 +48,7 @@ function InflectionTableVerb({ data, translation }) {
           width: 'max-content',
           '& .MuiTableCell-root': {
             padding: '6px',
-            fontSize: '0.9rem',
+            fontSize: '1rem',
           },
           '& .MuiTableCell-head': {
             backgroundColor: theme.palette.primary.blue,
@@ -102,7 +102,7 @@ function InflectionTableVerb({ data, translation }) {
         flexDirection: 'column', 
         alignItems: 'center', 
         width: '100%', 
-        my: 1 
+        mb: 10 
       }}>
         <Paper sx={{ 
           my: 2, 
@@ -118,7 +118,7 @@ function InflectionTableVerb({ data, translation }) {
         {translation && (
           <Paper sx={{ 
             my: 2, 
-            bgcolor: theme.palette.labels.bggreen, 
+            bgcolor: theme.palette.labels.bgorange, 
             color: theme.palette.labels.tx, 
             textAlign: 'center', 
             width: "60%"

@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box } from '@mui/material';
+import theme from './theme';
 
-function WordForm({ onSubmit }) {
+function WordForm({ onSubmit, onClear }) {
   const [word, setWord] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (word.trim()) {
       onSubmit(word);
-      setWord('');  // Clear the field after submitting
     }
+  };
+
+  const handleClear = () => {
+    setWord('');
+    onClear();
   };
 
   return (
@@ -27,9 +32,18 @@ function WordForm({ onSubmit }) {
         type="submit" 
         variant="contained" 
         color="primary"
-        size="medium"
+        size="large"
       >
         Search
+      </Button>
+      <Button 
+        type="button" 
+        variant="outlined" 
+        color="secondary"
+        size="large"
+        onClick={handleClear}
+      >
+        Clear
       </Button>
     </Box>
   );

@@ -13,6 +13,9 @@ const theme = createTheme({
           blue: blue[700],
           orange: orange[500],
         },
+        secondary: {
+          main: grey[900],
+        },
         toggle: {
           on: blue[700],
           off: grey[700],
@@ -22,7 +25,15 @@ const theme = createTheme({
           bgblue: blue[900],
           bggreen: green[900],
           bgorange: orange[900],
-          tx: grey[100]
+          tx: grey[100],
+          subtitle: grey[500],
+        },
+        link: {
+          default: grey[400],
+        },
+        button: {
+          blue: blue[600],
+          grey: grey[900], 
         }
       },
   typography: {
@@ -35,6 +46,16 @@ const theme = createTheme({
       },
     },
   components: {
+    
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          backgroundColor: grey[600], // Set this to your desired background color
+        },
+      },
+    },
+
+
     MuiButton: {
       styleOverrides: {
         root: {
