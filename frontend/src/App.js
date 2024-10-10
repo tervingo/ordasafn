@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Container, Typography, Box } from '@mui/material';
+import axios from 'axios';
 import theme from './theme';
 
 import WordForm from './WordForm';
@@ -11,22 +12,23 @@ import InflectionTableVerb from './InflectionTableVerb';
 import Translation from './Translation';
 import './ordasafn.css';
 import IcelandicFlagIcon from './IcelandicFlagIcon';
-import { alignProperty } from '@mui/material/styles/cssUtils';
 
 function App() {
   const [inflectionData, setInflectionData] = useState(null);
   const [searchedWord, setSearchedWord] = useState('');
   const [translation, setTranslation] = useState('');
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (word) => {
     setSearchedWord(word);
+    setError(null);
     try {
-      const response = await fetch(`http://localhost:5000/api/word-info?word=${word}`);
-      const data = await response.json();
-      console.log('Fetched data:', data); // Debug log
-      setInflectionData(data.inflection);
-    } catch (error) {
-      console.error('Error fetching data:', error);
+      const response = await axios.get(`https://bin.arnastofnun.is/api/ord/${word}`);
+      console.log('Fetched data:', response.data); // Debug log
+      setInflectionData(response.data);
+    } catch (err) {
+      setError('Error fetching data. Please try again.');
+      console.error('Error:', err);
     }
   };
 
@@ -42,6 +44,7 @@ function App() {
     setInflectionData(null);
     setSearchedWord('');
     setTranslation('');
+    setError(null);
   };
   
   const renderInflectionTable = () => {
@@ -65,30 +68,30 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container maxWidth="lg">
-      <Box sx={{ 
-        display: 'flex', 
-        flexDirection: 'column', 
-        alignItems: 'center', 
-        mt: 4, 
-        mb: 2 
-      }}>
         <Box sx={{ 
           display: 'flex', 
+          flexDirection: 'column', 
           alignItems: 'center', 
-          justifyContent: 'center',
-          width: '100%'
+          mt: 4, 
+          mb: 2 
         }}>
-          <IcelandicFlagIcon sx={{ fontSize: 40, marginRight: 2 }} />
-          <Typography variant="h3" component="h1" gutterBottom>
-            Icelandic Morphological Information
-          </Typography>
-        </Box>
-      </Box>      
+          <Box sx={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            width: '100%'
+          }}>
+            <IcelandicFlagIcon sx={{ fontSize: 40, marginRight: 2 }} />
+            <Typography variant="h3" component="h1" gutterBottom>
+              Icelandic Morphological Information
+            </Typography>
+          </Box>
+        </Box>      
         <Box sx={{ textAlign: 'center', mt: 2, mb: 6 }}>
-          <Typography variant="subtitle2" component="h1" gutterBottom sx={{ 
-              color: theme.palette.labels.subtitle, // Change this to your desired color
+          <Typography variant="subtitle2" component="h2" gutterBottom sx={{ 
+              color: theme.palette.labels.subtitle,
               '& a': {
-                color: theme.palette.link.default, // Change link color if needed
+                color: theme.palette.link.default,
                 textDecoration: 'none',
                 '&:hover': {
                   textDecoration: 'underline',
@@ -102,6 +105,7 @@ function App() {
         <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4 }}>
           <WordForm onSubmit={handleSubmit} onClear={handleClear} />
         </Box>
+        {error && <Typography color="error" align="center">{error}</Typography>}
         {searchedWord && <Translation word={searchedWord} onTranslate={handleTranslation} />}
         {renderInflectionTable()}
       </Container>
