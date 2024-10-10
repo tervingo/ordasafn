@@ -14,7 +14,7 @@ function InflectionTableAdjective({ data, translation }) {
   const cases = ['NF', 'ÞF', 'ÞGF', 'EF'];
   const genders = ['KK', 'KVK', 'HK'];
   const numbers = ['ET', 'FT'];
-  const declensions = ['FSB', 'FVB'];
+
 
   const getForm = (declension, casePrefix, gender, number) => {
     const form = bmyndir.find(b => b.g === `${declension}-${gender}-${casePrefix}${number}`);

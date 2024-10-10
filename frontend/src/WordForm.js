@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box } from '@mui/material';
-import theme from './theme';
+
 
 function WordForm({ onSubmit, onClear }) {
   const [word, setWord] = useState('');

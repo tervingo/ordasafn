@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
   Table, TableContainer, TableHead, TableBody, TableRow, TableCell, 
-  Paper, Typography, Checkbox, IconButton, Box
+  Paper, Typography, Box
 } from '@mui/material';
 import theme from './theme';
 

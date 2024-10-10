@@ -15,8 +15,7 @@ function InflectionTableVerb({ data, translation }) {
   const tenses = ['NT', 'ÞT'];
   const persons = ['1P', '2P', '3P'];
   const numbers = ['ET', 'FT'];
-  const voices = ['GM', 'MM'];
-
+  
   const getForm = (voice, mood, tense, person, number) => {
     const form = bmyndir.find(b => b.g === `${voice}-${mood}-${tense}-${person}-${number}`);
     return form ? form.b : '-';
