@@ -3,3 +3,45 @@
     background-color: whitesmoke;
     padding: 1em;
 }
+
+footer {
+    background-color: dimgray ;
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+
+  }
+  
+  .footer-content a, .footer-content p {
+    margin: 0 10px;
+  }
+
+  .footer-content a {
+    color: #333; /* Grey color */
+    text-decoration: none; /* Removes underline */
+  }
+  
+  /* Optional: style for link on hover */
+  .footer-content a:hover {
+    color: #111; /* Darker grey on hover */
+  }
+
+  .email-icon {
+    font-size: 1.2em;
+    color: #666;
+  }
+  
+  .email-icon:hover {
+    color: #333;
+  }
