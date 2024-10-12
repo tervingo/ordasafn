@@ -9,6 +9,7 @@ import WordForm from './WordForm';
 import InflectionTableNoun from './InflectionTableNoun';
 import InflectionTableAdjective from './InflectionTableAdjective';
 import InflectionTableVerb from './InflectionTableVerb';
+import InflectionTableNumeral from './InflectionTableNumeral';
 import OtherCatTable from './OtherCatTable'; 
 import Translation from './Translation';
 import WordCategorySelector from './WordCategorySelector';
@@ -94,6 +95,8 @@ function App() {
         return <InflectionTableAdjective data={inflectionData} translation={translation} />;
       case 'sagnorð':
         return <InflectionTableVerb data={inflectionData} translation={translation} />;
+      case 'töluorð':
+        return <InflectionTableNumeral data={inflectionData} translation={translation} />;
       default:
         return <OtherCatTable data={inflectionData} translation={translation} />;
     }
