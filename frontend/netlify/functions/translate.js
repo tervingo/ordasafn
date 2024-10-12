@@ -11,7 +11,7 @@ exports.handler = async function(event, context) {
   }
 
   try {
-    console.log(`Fetching translation for: ${word}`);
+    console.log(`Fetching translation for: ${encodeURIComponent(word)}`);
     const response = await axios.get(`https://is.glosbe.com/is/en/${encodeURIComponent(word)}`, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
