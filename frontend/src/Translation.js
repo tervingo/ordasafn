@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-function Translation({ word, onTranslate }) {
+/* function Translation({ word, onTranslate }) {
   useEffect(() => {
     if (word) {
       const fetchTranslation = async (searchWord) => {
@@ -36,6 +36,45 @@ function Translation({ word, onTranslate }) {
         } catch (err) {
           console.error('Error fetching translation:', err);
           onTranslate('Failed to fetch translation');
+        }
+      };
+
+      fetchTranslation(word);
+    }
+  }, [word, onTranslate]);
+
+  return null; // This component doesn't render anything
+}
+ */
+
+function Translation({ word, onTranslate }) {
+  useEffect(() => {
+    if (word) {
+      const fetchTranslation = async (searchWord) => {
+        try {
+          console.log('Fetching translation for:', searchWord);
+          const response = await fetch(`/.netlify/functions/translate?word=${encodeURIComponent(searchWord)}`);
+          console.log('Response status:', response.status);
+          const text = await response.text();
+          console.log('Response text:', text);
+
+          let data;
+          try {
+            data = JSON.parse(text);
+          } catch (error) {
+            console.error('Error parsing JSON:', error);
+            throw new Error('Invalid response format');
+          }
+
+          if (response.ok) {
+            console.log('Translation data:', data);
+            onTranslate(data.message || data.translation || 'Translation received but format unexpected');
+          } else {
+            throw new Error(data.error || `HTTP error! status: ${response.status}`);
+          }
+        } catch (err) {
+          console.error('Error fetching translation:', err);
+          onTranslate(`Failed to fetch translation: ${err.message}`);
         }
       };
 
