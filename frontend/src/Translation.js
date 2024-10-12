@@ -9,10 +9,23 @@ function Translation({ word, onTranslate }) {
 
           if (process.env.NODE_ENV === 'production') {
             // Use serverless function in production
-            const response = await fetch(`/netlify/functions/translate?word=${encodeURIComponent(searchWord)}`);
-            const data = await response.json();
-            
-            if (response.ok) {
+            console.log('Fetching translation for:', searchWord);
+            const response = await fetch(`/.netlify/functions/translate?word=${encodeURIComponent(searchWord)}`);
+            console.log('Response status:', response.status);
+            const text = await response.text();
+            console.log('Raw response:', text);
+
+            let data;
+            try {
+              data = JSON.parse(text);
+              console.log('Parsed data:', data);
+            } catch (error) {
+              console.error('Error parsing JSON:', error);
+              console.error('Raw response causing parse error:', text);
+              throw new Error(`Invalid JSON response: ${text.substring(0, 100)}...`);
+            }
+
+            if (response.ok && data.translation) {
               translation = data.translation;
             } else {
               throw new Error(data.error || 'Translation not found');
@@ -32,10 +45,11 @@ function Translation({ word, onTranslate }) {
             }
           }
 
+          console.log('Translation received:', translation);
           onTranslate(translation);
         } catch (err) {
           console.error('Error fetching translation:', err);
-          onTranslate('Failed to fetch translation');
+          onTranslate(`Failed to fetch translation: ${err.message}`);
         }
       };
 
