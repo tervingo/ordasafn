@@ -3,12 +3,20 @@
   publish = "build"
   functions = "netlify/functions"
 
+# Redirect for Netlify Functions
 [[redirects]]
   from = "/netlify/functions/*"
-  to = "/netlify/functions/:splat"
+  to = "/.netlify/functions/:splat"
   status = 200
   force = true
 
+# Asset handling
+[[redirects]]
+  from = "/static/*"
+  to = "/static/:splat"
+  status = 200
+
+# SPA catch-all
 [[redirects]]
   from = "/*"
   to = "/index.html"
