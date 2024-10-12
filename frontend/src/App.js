@@ -9,6 +9,7 @@ import WordForm from './WordForm';
 import InflectionTableNoun from './InflectionTableNoun';
 import InflectionTableAdjective from './InflectionTableAdjective';
 import InflectionTableVerb from './InflectionTableVerb';
+import OtherCatTable from './OtherCatTable'; 
 import Translation from './Translation';
 import WordCategorySelector from './WordCategorySelector';
 import './ordasafn.css';
@@ -94,8 +95,7 @@ function App() {
       case 'sagnorð':
         return <InflectionTableVerb data={inflectionData} translation={translation} />;
       default:
-        console.log(`No specific table for category: ${category}`);
-        return null;
+        return <OtherCatTable data={inflectionData} translation={translation} />;
     }
   };
 
