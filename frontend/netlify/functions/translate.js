@@ -3,11 +3,6 @@ const axios = require('axios');
 exports.handler = async function(event, context) {
   const { word } = event.queryStringParameters;
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ message: `Received word: ${word}` })
-  };
-  /* 
   if (!word) {
     return {
       statusCode: 400,
@@ -39,5 +34,5 @@ exports.handler = async function(event, context) {
       statusCode: 500,
       body: JSON.stringify({ error: 'Failed to fetch translation' })
     };
-  } */
+  }
 };
