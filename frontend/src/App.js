@@ -10,30 +10,57 @@ import InflectionTableNoun from './InflectionTableNoun';
 import InflectionTableAdjective from './InflectionTableAdjective';
 import InflectionTableVerb from './InflectionTableVerb';
 import Translation from './Translation';
+import WordCategorySelector from './WordCategorySelector';
 import './ordasafn.css';
 import IcelandicFlagIcon from './IcelandicFlagIcon';
 
 function App() {
+  const [wordData, setWordData] = useState(null);
   const [inflectionData, setInflectionData] = useState(null);
   const [searchedWord, setSearchedWord] = useState('');
   const [translation, setTranslation] = useState('');
   const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [showSelector, setShowSelector] = useState(false);
 
   const handleSubmit = async (word) => {
     setSearchedWord(word);
     setError(null);
+    setSelectedCategory(null);
+    setShowSelector(false);
+    setInflectionData(null);
     try {
       const response = await axios.get(`https://bin.arnastofnun.is/api/ord/${word}`);
-      console.log('Fetched data:', response.data); // Debug log
-      setInflectionData(response.data);
+      console.log('Fetched word data:', response.data);
+      
+      if (response.data.length > 1) {
+        setWordData(response.data);
+        setShowSelector(true);
+      } else if (response.data.length === 1) {
+        await fetchInflectionData(response.data[0].guid);
+      } else {
+        setError('No data found for the given word.');
+      }
     } catch (err) {
       setError('Error fetching data. Please try again.');
       console.error('Error:', err);
     }
   };
 
+  const fetchInflectionData = async (guid) => {
+    try {
+      const response = await axios.get(`https://bin.arnastofnun.is/api/ord/${guid}`);
+      console.log('Fetched inflection data:', response.data);
+      setInflectionData(response.data);
+      setSelectedCategory(response.data[0]);
+    } catch (err) {
+      setError('Error fetching inflection data. Please try again.');
+      console.error('Error:', err);
+    }
+  };
+
   useEffect(() => {
-    console.log('inflectionData updated:', inflectionData); // Debug log
+    console.log('inflectionData updated:', inflectionData);
   }, [inflectionData]);
 
   const handleTranslation = (translatedText) => {
@@ -41,16 +68,24 @@ function App() {
   };
 
   const handleClear = () => {
+    setWordData(null);
     setInflectionData(null);
     setSearchedWord('');
     setTranslation('');
     setError(null);
+    setSelectedCategory(null);
+    setShowSelector(false);
+  };
+
+  const handleCategorySelect = async (category) => {
+    setShowSelector(false);
+    await fetchInflectionData(category.guid);
   };
   
   const renderInflectionTable = () => {
-    if (!inflectionData || !inflectionData[0]) return null;
-
-    const category = inflectionData[0].ofl_heiti;
+    if (!selectedCategory || !inflectionData) return null;
+  
+    const category = selectedCategory.ofl_heiti;
     switch (category) {
       case 'nafnorð':
         return <InflectionTableNoun data={inflectionData} translation={translation} />;
@@ -107,6 +142,13 @@ function App() {
         </Box>
         {error && <Typography color="error" align="center">{error}</Typography>}
         {searchedWord && <Translation word={searchedWord} onTranslate={handleTranslation} />}
+        {showSelector && (
+          <WordCategorySelector
+            word={searchedWord}
+            categories={wordData}
+            onSelect={handleCategorySelect}
+          />
+        )}
         {renderInflectionTable()}
       </Container>
     </ThemeProvider>
