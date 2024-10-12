@@ -15,9 +15,3 @@
   from = "/static/*"
   to = "/static/:splat"
   status = 200
-
-# SPA catch-all
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
