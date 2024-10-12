@@ -9,7 +9,7 @@ function Translation({ word, onTranslate }) {
 
           if (process.env.NODE_ENV === 'production') {
             // Use serverless function in production
-            const response = await fetch(`/.netlify/functions/translate?word=${encodeURIComponent(searchWord)}`);
+            const response = await fetch(`/netlify/functions/translate?word=${encodeURIComponent(searchWord)}`);
             const data = await response.json();
             
             if (response.ok) {
