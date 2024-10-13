@@ -12,7 +12,6 @@ function InflectionTablePronoun({ data, translation }) {
 
 const bmyndir = data[0].bmyndir;
 const cases = ['NF', 'ÞF', 'ÞGF', 'EF'];
-const genders = ['KK', 'KVK', 'HK'];
 const numbers = ['ET', 'FT'];
 
 
@@ -104,15 +103,6 @@ function getCaseName(casePrefix) {
     case 'ÞGF': return 'Dative';
     case 'EF': return 'Genitive';
     default: return casePrefix;
-  }
-}
-
-function getGenderName(gender) {
-  switch (gender) {
-    case 'KK': return 'Masc.';
-    case 'KVK': return 'Fem.';
-    case 'HK': return 'Neut.';
-    default: return gender;
   }
 }
 
