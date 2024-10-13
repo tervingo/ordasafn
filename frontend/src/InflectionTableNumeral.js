@@ -59,9 +59,9 @@ function InflectionTableNumeral({ data, translation }) {
         >
             <TableHead>
             <TableRow>
-                <TableCell rowSpan={2}>Case</TableCell>
-                <TableCell colSpan={3}>Singular</TableCell>
-                <TableCell colSpan={3}>Plural</TableCell>
+                <TableCell rowSpan={2}>CASE</TableCell>
+                <TableCell align="center" colSpan={3}>SINGULAR</TableCell>
+                <TableCell align="center" colSpan={3}>PLURAL</TableCell>
             </TableRow>
             <TableRow>
                 {numbers.map(number => (

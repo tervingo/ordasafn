@@ -60,8 +60,8 @@ function InflectionTableVerb({ data, translation }) {
         <TableHead>
           <TableRow>
             <TableCell colSpan={2}></TableCell>
-            <TableCell colSpan={3}>Singular</TableCell>
-            <TableCell colSpan={3}>Plural</TableCell>
+            <TableCell align="center" colSpan={3}>SINGULAR</TableCell>
+            <TableCell align="center" colSpan={3}>PLURAL</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Mood</TableCell>

@@ -10,6 +10,8 @@ import InflectionTableNoun from './InflectionTableNoun';
 import InflectionTableAdjective from './InflectionTableAdjective';
 import InflectionTableVerb from './InflectionTableVerb';
 import InflectionTableNumeral from './InflectionTableNumeral';
+import InflectionTablePronoun from './InflectionTablePronoun';
+import InflectionTableOtherPron from './InflecttionTableOtherPron';
 import OtherCatTable from './OtherCatTable'; 
 import Translation from './Translation';
 import WordCategorySelector from './WordCategorySelector';
@@ -97,6 +99,10 @@ function App() {
         return <InflectionTableVerb data={inflectionData} translation={translation} />;
       case 'töluorð':
         return <InflectionTableNumeral data={inflectionData} translation={translation} />;
+      case 'önnur fornöfn':
+        return <InflectionTableOtherPron data={inflectionData} translation={translation} />;
+      case 'persónufornöfn':
+        return <InflectionTablePronoun data={inflectionData} translation={translation} />;
       default:
         return <OtherCatTable data={inflectionData} translation={translation} />;
     }
