@@ -10,8 +10,10 @@ import InflectionTableNoun from './InflectionTableNoun';
 import InflectionTableAdjective from './InflectionTableAdjective';
 import InflectionTableVerb from './InflectionTableVerb';
 import InflectionTableNumeral from './InflectionTableNumeral';
+import InflectionTableOrdinal from './InflectionTableOrdinal';
 import InflectionTablePronoun from './InflectionTablePronoun';
 import InflectionTableOtherPron from './InflecttionTableOtherPron';
+import InflectionTableArticle from './InflectionTableArticle';
 import OtherCatTable from './OtherCatTable'; 
 import Translation from './Translation';
 import WordCategorySelector from './WordCategorySelector';
@@ -101,8 +103,12 @@ function App() {
         return <InflectionTableNumeral data={inflectionData} translation={translation} />;
       case 'önnur fornöfn':
         return <InflectionTableOtherPron data={inflectionData} translation={translation} />;
+      case 'greinir':
+          return <InflectionTableArticle data={inflectionData} translation={translation} />;
       case 'persónufornöfn':
         return <InflectionTablePronoun data={inflectionData} translation={translation} />;
+      case 'raðtölur':
+        return <InflectionTableOrdinal data={inflectionData} translation={translation} />;
       default:
         return <OtherCatTable data={inflectionData} translation={translation} />;
     }
