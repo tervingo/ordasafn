@@ -52,9 +52,9 @@ function WordHeader({ word, wordType, translation, theme }) {
             }}
           >
             <Typography variant="subtitle2" component="h2" gutterBottom sx={{ 
-              color: theme.palette.labels.subtitle,
+              color: theme.palette.labels.tx,
               '& a': {
-                color: theme.palette.link.default,
+                color: theme.palette.labels.subtitle,
                 textDecoration: 'none',
                 '&:hover': {textDecoration: 'underline',},
               },
