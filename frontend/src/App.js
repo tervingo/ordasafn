@@ -98,7 +98,7 @@ function App() {
       case 'lýsingarorð':
         return <InflectionTableAdjective data={inflectionData} translation={translation} />;
       case 'sagnorð':
-        return <InflectionTableVerb data={inflectionData} translation={translation} />;
+        return <InflectionTableVerb data={inflectionData} translation={translation} theme={theme} />;
       case 'töluorð':
         return <InflectionTableNumeral data={inflectionData} translation={translation} />;
       case 'önnur fornöfn':
@@ -126,7 +126,8 @@ function App() {
           mb: 2 
         }}>
           <Box sx={{ 
-            display: 'flex', 
+            display: 'flex',
+            flexDirection: 'column',  
             alignItems: 'center', 
             justifyContent: 'center',
             width: '100%'

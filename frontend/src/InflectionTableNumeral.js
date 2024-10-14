@@ -1,7 +1,9 @@
 import React from 'react';
+import { Container } from '@mui/material';
+import WordHeader from './WordHeader';
 import { 
   Table, TableContainer, TableHead, TableBody, TableRow, TableCell, 
-  Paper, Typography, Box
+  Paper
 } from '@mui/material';
 import theme from './theme';
 
@@ -90,44 +92,28 @@ function InflectionTableNumeral({ data, translation }) {
     );
 
     return (
-        <div>
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', mb: 10 }}>
-                <Paper sx={{ my: 2, bgcolor: theme.palette.labels.bggreen, color: theme.palette.labels.tx, textAlign: 'center', width: "60%"}} elevation={3}>
-                <Typography variant="h4">
-                    "{data[0].ord}" (numeral)
-                </Typography>
-                </Paper>
-                {translation && (
-                <Paper sx={{ my: 2, bgcolor: theme.palette.labels.bgorange, color: theme.palette.labels.tx, textAlign: 'center', width: "60%"}} elevation={3}>
-                    <Typography variant="h5">
-                    {translation}
-                    </Typography>
-                </Paper>
-                )}
-            </Box>           
-            {renderTable('FSB')}
-        </div>
+    <Container maxWidth="md" style={{ paddingBottom: '100px' }}>
+      <WordHeader 
+        word={data[0].ord}
+        wordType="numeral"
+        translation={translation}
+        theme={theme}
+      /> 
+        {renderTable('FSB')}
+    </Container>
         );
   }
   else
   {
     return (
-        <div>
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', mb: 10 }}>
-                <Paper sx={{ my: 2, bgcolor: theme.palette.labels.bggreen, color: theme.palette.labels.tx, textAlign: 'center', width: "60%"}} elevation={3}>
-                <Typography variant="h4">
-                    "{data[0].ord}" (adjective)
-                </Typography>
-                </Paper>
-                {translation && (
-                <Paper sx={{ my: 2, bgcolor: theme.palette.labels.bgorange, color: theme.palette.labels.tx, textAlign: 'center', width: "60%"}} elevation={3}>
-                    <Typography variant="h5">
-                    {translation}
-                    </Typography>
-                </Paper>
-                )}
-            </Box>
-        </div>
+    <Container maxWidth="md" style={{ paddingBottom: '100px' }}>
+        <WordHeader 
+          word={data[0].ord}
+          wordType="numeral"
+          translation={translation}
+          theme={theme}
+        /> 
+    </Container>  
         );
   }
 }

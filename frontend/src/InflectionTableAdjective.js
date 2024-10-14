@@ -1,7 +1,10 @@
 import React from 'react';
+import { Container } from '@mui/material';
+import WordHeader from './WordHeader';
+
 import { 
   Table, TableContainer, TableHead, TableBody, TableRow, TableCell, 
-  Paper, Typography, Box
+  Paper, Typography
 } from '@mui/material';
 import theme from './theme';
 
@@ -85,46 +88,19 @@ function InflectionTableAdjective({ data, translation }) {
   );
 
   return (
-    <div>
-      <Box sx={{ 
-        display: 'flex', 
-        flexDirection: 'column', 
-        alignItems: 'center', 
-        width: '100%', 
-        mb: 10 
-      }}>
-        <Paper sx={{ 
-          my: 2, 
-          bgcolor: theme.palette.labels.bggreen, 
-          color: theme.palette.labels.tx, 
-          textAlign: 'center', 
-          width: "60%"
-        }} elevation={3}>
-          <Typography variant="h4">
-            "{data[0].ord}" (adjective)
-          </Typography>
-        </Paper>
-        {translation && (
-          <Paper sx={{ 
-            my: 2, 
-            bgcolor: theme.palette.labels.bgorange, 
-            color: theme.palette.labels.tx, 
-            textAlign: 'center', 
-            width: "60%"
-          }} elevation={3}>
-            <Typography variant="h5">
-              {translation}
-            </Typography>
-          </Paper>
-        )}
-      </Box>
-      
+  <Container maxWidth="md" style={{ paddingBottom: '100px' }}>
+    <WordHeader 
+      word={data[0].ord}
+      wordType="adjective"
+      translation={translation}
+      theme={theme}
+    />       
       <Typography variant="h5" gutterBottom>Strong Declension</Typography>
       {renderTable('FSB')}
       
       <Typography variant="h5" gutterBottom>Weak Declension</Typography>
       {renderTable('FVB')}
-    </div>
+    </Container>
   );
 }
 

@@ -23,7 +23,7 @@ function WordForm({ onSubmit, onClear }) {
         value={word}
         onChange={(e) => setWord(e.target.value)}
         placeholder="Enter Icelandic word"
-        label="Icelandic word"
+        label="Enter Icelandic word"
         variant="outlined"
         size="medium"
         sx={{ width: '300px' }}

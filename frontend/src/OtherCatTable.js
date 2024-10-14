@@ -1,27 +1,21 @@
 import React from 'react';
-import { 
-  Paper, Typography, Box
-} from '@mui/material';
+import { Container } from '@mui/material';
+import WordHeader from './WordHeader';
 import theme from './theme';
 
 function OtherCatTable({ data, translation }) {
+
+  const categ = getCat(data[0].ofl_heiti);
   return (
-  <div>
-       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', mb: 10 }}>
-        <Paper sx={{ my: 2, bgcolor: theme.palette.labels.bggreen, color: theme.palette.labels.tx, textAlign: 'center', width: "60%"}} elevation={3}>
-          <Typography variant="h4">
-            "{data[0].ord}" ({getCat(data[0].ofl_heiti)})
-          </Typography>
-        </Paper>
-        {translation && (
-          <Paper sx={{ my: 2, bgcolor: theme.palette.labels.bgorange, color: theme.palette.labels.tx, textAlign: 'center', width: "60%"}} elevation={3}>
-            <Typography variant="h5">
-              {translation}
-            </Typography>
-          </Paper>
-        )}
-      </Box>
-  </div>
+
+  <Container maxWidth="md" style={{ paddingBottom: '100px' }}>
+    <WordHeader 
+      word={data[0].ord}
+      wordType={categ}
+      translation={translation}
+      theme={theme}
+    />       
+  </Container>
   );
 }
 
