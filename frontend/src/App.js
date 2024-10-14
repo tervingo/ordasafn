@@ -19,6 +19,9 @@ import Translation from './Translation';
 import WordCategorySelector from './WordCategorySelector';
 import './ordasafn.css';
 import IcelandicFlagIcon from './IcelandicFlagIcon';
+import { initGA, logPageView } from './analytics';
+
+
 
 function App() {
   const [wordData, setWordData] = useState(null);
@@ -28,6 +31,12 @@ function App() {
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showSelector, setShowSelector] = useState(false);
+
+  useEffect(() => {
+    initGA('G-1HQ324XQ5W'); // Replace with your Measurement ID
+    logPageView(); // Log initial page view
+  }, []);
+
 
   const handleSubmit = async (word) => {
     setSearchedWord(word);
