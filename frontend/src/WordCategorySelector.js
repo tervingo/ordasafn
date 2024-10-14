@@ -38,7 +38,7 @@ const WordCategorySelector = ({ word, categories, onSelect }) => {
             variant="outlined" 
             style={{ margin: '8px 0' }}
           >
-            {getCat(category.ofl_heiti)} ({category.ofl})
+            {getCat(category.ofl_heiti)}
           </Button>
         ))}
       </DialogContent>
