@@ -26,7 +26,7 @@ const theme = createTheme({
           bggreen: green[900],
           bgorange: orange[900],
           tx: grey[100],
-          watchout: orange[400],
+          watchout: orange[100],
           subtitle: grey[500],
         },
         link: {

@@ -24,45 +24,39 @@ function WordHeader({ word, wordType, translation, theme }) {
         </Typography>
       </Paper>
       {translation && (
-        <>
-          <Paper sx={{ 
-            my: 2, 
-            bgcolor: theme.palette.labels.bgorange, 
-            color: theme.palette.labels.tx, 
-            textAlign: 'center', 
-            width: "60%"
-          }} elevation={3}>
+        <Paper sx={{ 
+          my: 2, 
+          bgcolor: theme.palette.labels.bgorange, 
+          color: theme.palette.labels.tx, 
+          width: "60%",
+          p: 2, // Add some padding
+        }} elevation={3}>
+          <Box sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
             <Typography variant="h5">
               {translation}
             </Typography>
-          </Paper>
-          <Link 
-            href={glosbeUrl} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              color: theme.palette.primary.main,
-              textDecoration: 'none',
-              mt: 1,
-              '&:hover': {
-                textDecoration: 'underline'
-              }
-            }}
-          >
-            <Typography variant="subtitle1" component="h2" gutterBottom sx={{ 
-              color: theme.palette.labels.watchout,
-              '& a': {
-                color: theme.palette.labels.subtitle,
+            <Link 
+              href={glosbeUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              sx={{
+                color: theme.palette.labels.watchout,
                 textDecoration: 'none',
-                '&:hover': {textDecoration: 'underline',},
-              },
-            }}>
-              Click here to see all the translations for this word (Glosbe web page)
-            </Typography>
-          </Link>
-        </>
+                fontSize: '1.2rem', // Smaller font size
+                ml: 2, // Add some margin to the left
+                '&:hover': {
+                  textDecoration: 'underline',
+                },
+              }}
+            >
+              see more...
+            </Link>
+          </Box>
+        </Paper>
       )}
     </Box>
   );
