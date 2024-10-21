@@ -51,15 +51,15 @@ function WordHeader({ word, wordType, translation, theme }) {
               }
             }}
           >
-            <Typography variant="subtitle2" component="h2" gutterBottom sx={{ 
-              color: theme.palette.labels.tx,
+            <Typography variant="subtitle1" component="h2" gutterBottom sx={{ 
+              color: theme.palette.labels.watchout,
               '& a': {
                 color: theme.palette.labels.subtitle,
                 textDecoration: 'none',
                 '&:hover': {textDecoration: 'underline',},
               },
             }}>
-              See Glosbe translation page for this word
+              Click here to see all the translations for this word (Glosbe web page)
             </Typography>
           </Link>
         </>
