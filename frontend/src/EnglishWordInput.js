@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import { TextField, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Box } from '@mui/material';
 
 // Helper function to decode HTML entities
@@ -8,12 +8,22 @@ const decodeHTMLEntities = (html) => {
   return textarea.value;
 };
 
-const EnglishWordInput = ({ onTranslationSelect }) => {
+const EnglishWordInput = forwardRef(({ onTranslationSelect }, ref) => {
   const [englishWord, setEnglishWord] = useState('');
   const [translations, setTranslations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [open, setOpen] = useState(false);
+
+  // Expose clear function to parent
+  useImperativeHandle(ref, () => ({
+    clear: () => {
+      setEnglishWord('');
+      setTranslations([]);
+      setError('');
+      setOpen(false);
+    }
+  }));
 
   const fetchTranslations = async () => {
     if (!englishWord.trim()) return;
@@ -95,11 +105,13 @@ const EnglishWordInput = ({ onTranslationSelect }) => {
         <Button 
           type="submit" 
           variant="contained" 
-          disabled={loading || !englishWord.trim()}
+          // disabled={loading || !englishWord.trim()}
+          color="primary"
+          size="large"
         >
-          Translate
+          Search Translations
         </Button>
-      </Box>
+    </Box>
       
       {error && (
         <Box sx={{ color: 'error.main', mt: 1 }}>
@@ -131,6 +143,6 @@ const EnglishWordInput = ({ onTranslationSelect }) => {
       </Dialog>
     </>
   );
-};
+});
 
 export default EnglishWordInput;

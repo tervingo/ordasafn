@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { TextField, Button, Box } from '@mui/material';
 
-
-function WordForm({ onSubmit, onClear }) {
+const WordForm = forwardRef(({ onSubmit, onClear }, ref) => {
   const [word, setWord] = useState('');
+
+  // Expose clear function to parent
+  useImperativeHandle(ref, () => ({
+    clear: () => {
+      setWord('');
+    }
+  }));
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (word.trim()) {
       onSubmit(word);
     }
-  };
-
-  const handleClear = () => {
-    setWord('');
-    onClear();
   };
 
   return (
@@ -36,17 +37,8 @@ function WordForm({ onSubmit, onClear }) {
       >
         Show Inflections
       </Button>
-      <Button 
-        type="button" 
-        variant="outlined" 
-        color="secondary"
-        size="large"
-        onClick={handleClear}
-      >
-        Clear
-      </Button>
     </Box>
   );
-}
+});
 
 export default WordForm;

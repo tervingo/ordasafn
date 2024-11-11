@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { Container, Typography, Box } from '@mui/material';
+import { Container, Typography, Box, Button } from '@mui/material';
 import axios from 'axios';
 import theme from './theme';
 
@@ -32,6 +32,8 @@ function App() {
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showSelector, setShowSelector] = useState(false);
+  const englishInputRef = React.useRef();
+  const wordFormRef = React.useRef();
 
   useEffect(() => {
     initGA('G-1HQ324XQ5W'); // Replace with your Measurement ID
@@ -91,6 +93,8 @@ function App() {
     setError(null);
     setSelectedCategory(null);
     setShowSelector(false);
+    englishInputRef.current?.clear();
+    wordFormRef.current?.clear();
   };
 
   const handleCategorySelect = async (category) => {
@@ -127,7 +131,7 @@ function App() {
         return <OtherCatTable data={inflectionData} translation={translation} />;
     }
   };
-
+  
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -175,8 +179,17 @@ function App() {
               gap: 6,                  // Increase gap between items (theme.spacing(6) = 48px)
               mb: 4 
               }}>
-            <EnglishWordInput onTranslationSelect={handleIcelandicTranslation} />
-            <WordForm onSubmit={handleSubmit} onClear={handleClear} />
+            <EnglishWordInput ref={englishInputRef} onTranslationSelect={handleIcelandicTranslation} />
+            <WordForm ref={wordFormRef} onSubmit={handleSubmit} onClear={handleClear} />
+            <Button 
+                type="button" 
+                variant="outlined" 
+                color="secondary"
+                size="large"
+                onClick={handleClear}
+              >
+              Clear
+            </Button>
         </Box>
         {error && <Typography color="error" align="center">{error}</Typography>}
         {searchedWord && <Translation word={searchedWord} onTranslate={handleTranslation} />}
