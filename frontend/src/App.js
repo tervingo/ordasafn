@@ -17,6 +17,7 @@ import InflectionTableArticle from './InflectionTableArticle';
 import OtherCatTable from './OtherCatTable'; 
 import Translation from './Translation';
 import WordCategorySelector from './WordCategorySelector';
+import EnglishWordInput from './EnglishWordInput';
 import './ordasafn.css';
 import IcelandicFlagIcon from './IcelandicFlagIcon';
 import { initGA, logPageView } from './analytics';
@@ -96,7 +97,11 @@ function App() {
     setShowSelector(false);
     await fetchInflectionData(category.guid);
   };
-  
+
+  const handleIcelandicTranslation = (icelandicWord) => {
+    handleSubmit(icelandicWord);
+  };
+
   const renderInflectionTable = () => {
     if (!selectedCategory || !inflectionData) return null;
   
@@ -162,8 +167,16 @@ function App() {
           </Typography>
         </Box>
 
-        <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4 }}>
-          <WordForm onSubmit={handleSubmit} onClear={handleClear} />
+        <Box sx={{ 
+              display: 'flex', 
+              justifyContent: 'center', 
+              flexDirection: 'column',  // Change to column layout
+              alignItems: 'center',     // Center items horizontally
+              gap: 6,                  // Increase gap between items (theme.spacing(6) = 48px)
+              mb: 4 
+              }}>
+            <EnglishWordInput onTranslationSelect={handleIcelandicTranslation} />
+            <WordForm onSubmit={handleSubmit} onClear={handleClear} />
         </Box>
         {error && <Typography color="error" align="center">{error}</Typography>}
         {searchedWord && <Translation word={searchedWord} onTranslate={handleTranslation} />}

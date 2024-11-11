@@ -34,7 +34,7 @@ function WordForm({ onSubmit, onClear }) {
         color="primary"
         size="large"
       >
-        Search
+        Show Inflections
       </Button>
       <Button 
         type="button" 
