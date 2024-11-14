@@ -11,7 +11,9 @@ const theme = createTheme({
           main: grey[600], // This is the default MUI blue
           dark: grey[800], // You can change this to any color you want
           blue: blue[700],
+          lightblue: blue[200],
           orange: orange[500],
+          green: green[400],
         },
         secondary: {
           main: grey[900],

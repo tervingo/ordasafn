@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import theme from './theme';
 
-function InflectionTableNoun({ data, translation }) {
+function InflectionTableNoun({ data, translation, isInfl, enteredWord }) {  // Add enteredWord prop
   if (!data || !data[0] || !data[0].bmyndir) {
     return <p>No hay datos de inflexión disponibles.</p>;
   }
@@ -22,72 +22,86 @@ function InflectionTableNoun({ data, translation }) {
     return form ? form.b : '-';
   };
 
+  // Function to determine if a cell should be highlighted
+  const shouldHighlight = (form) => {
+    return isInfl && form === enteredWord;
+  };
+
   const nounDef = "noun - " + getGender(data[0].kyn);
   return (
-  <Container maxWidth="md" style={{ paddingBottom: '100px' }}>
-    <WordHeader 
-      word={data[0].ord}
-      wordType= {nounDef}
-      translation={translation}
-      theme={theme}
-    />        
+    <Container maxWidth="md" style={{ paddingBottom: '100px' }}>
+      <WordHeader 
+        word={data[0].ord}
+        wordType={nounDef}
+        translation={translation}
+        theme={theme}
+      />        
       <div className="inflection-table">
-      
-      <TableContainer 
-        component={Paper} 
-        sx={{ 
-          flexGrow: 1, 
-          overflow: 'auto', 
-          maxHeight: 'calc(100vh - 100px)', 
-          maxWidth: '100%',
-          backgroundColor: theme.palette.primary.dark
-          }}
-        >
-        <Table 
-          stickyHeader 
+        <TableContainer 
+          component={Paper} 
           sx={{ 
-            border: 1, 
-            borderColor: 'divider',
-            minWidth: '100%', // Ensure table takes full width
-            width: 'max-content',
-            '& .MuiTableCell-root': {
-              padding: '6px', // Reduce cell padding
-              fontSize: '1.2rem', // Decrease font size
-            },
-            '& .MuiTableCell-head': {
-              backgroundColor: theme.palette.primary.blue,
-              position: 'sticky',
-              top: 0,
-              zIndex: 1,
-            },
+            flexGrow: 1, 
+            overflow: 'auto', 
+            maxHeight: 'calc(100vh - 100px)', 
+            maxWidth: '100%',
+            backgroundColor: theme.palette.primary.dark
           }}
         >
-        <TableHead>
-          <TableRow>
-            <TableCell>Case</TableCell>
-            <TableCell>Sing Indef</TableCell>
-            <TableCell>Sing Def</TableCell>
-            <TableCell>Plur Indef</TableCell>
-            <TableCell>Plur Def</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {cases.map(casePrefix => (
-            <TableRow key={casePrefix}>
-              <TableCell>{getCaseName(casePrefix)}</TableCell>
-              {numbers.map(number => (
-                <React.Fragment key={number}>
-                  <TableCell>{getForm(casePrefix, number, false)}</TableCell>
-                  <TableCell>{getForm(casePrefix, number, true)}</TableCell>
-                </React.Fragment>
+          <Table 
+            stickyHeader 
+            sx={{ 
+              border: 1, 
+              borderColor: 'divider',
+              minWidth: '100%',
+              width: 'max-content',
+              '& .MuiTableCell-root': {
+                padding: '6px',
+                fontSize: '1.2rem',
+              },
+              '& .MuiTableCell-head': {
+                backgroundColor: theme.palette.primary.blue,
+                position: 'sticky',
+                top: 0,
+                zIndex: 1,
+              },
+            }}
+          >
+            <TableHead>
+              <TableRow>
+                <TableCell>Case</TableCell>
+                <TableCell>Sing Indef</TableCell>
+                <TableCell>Sing Def</TableCell>
+                <TableCell>Plur Indef</TableCell>
+                <TableCell>Plur Def</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {cases.map(casePrefix => (
+                <TableRow key={casePrefix}>
+                  <TableCell>{getCaseName(casePrefix)}</TableCell>
+                  {numbers.map(number => (
+                    <React.Fragment key={number}>
+                      {/* Indefinite form */}
+                      <TableCell 
+                        sx={{color: shouldHighlight(getForm(casePrefix, number, false)) ? 'yellow' : 'inherit'}}
+                      >
+                        {getForm(casePrefix, number, false)}
+                      </TableCell>
+                      {/* Definite form */}
+                      <TableCell 
+                        sx={{color: shouldHighlight(getForm(casePrefix, number, true)) ? 'yellow' : 'inherit'}}
+                      >
+                        {getForm(casePrefix, number, true)}
+                      </TableCell>
+                    </React.Fragment>
+                  ))}
+                </TableRow>
               ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    </div>
-  </Container>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    </Container>
   );
 }
 

@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import theme from './theme';
 
-function InflectionTableAdjective({ data, translation }) {
+function InflectionTableAdjective({ data, translation, isInfl, enteredWord }) {
   if (!data || !data[0] || !data[0].bmyndir) {
     return <p>No inflection data available for this adjective.</p>;
   }
@@ -22,6 +22,11 @@ function InflectionTableAdjective({ data, translation }) {
   const getForm = (declension, casePrefix, gender, number) => {
     const form = bmyndir.find(b => b.g === `${declension}-${gender}-${casePrefix}${number}`);
     return form ? form.b : '-';
+  };
+
+  // Function to determine if a cell should be highlighted
+  const shouldHighlight = (form) => {
+    return isInfl && form === enteredWord;
   };
 
   const renderTable = (declension) => (
@@ -75,7 +80,7 @@ function InflectionTableAdjective({ data, translation }) {
               <TableCell>{getCaseName(casePrefix)}</TableCell>
               {numbers.map(number => (
                 genders.map(gender => (
-                  <TableCell key={`${number}-${gender}`}>
+                  <TableCell key={`${number}-${gender}`} sx={{color: shouldHighlight(getForm(declension, casePrefix, gender, number)) ? 'yellow' : 'inherit'}}>
                     {getForm(declension, casePrefix, gender, number)}
                   </TableCell>
                 ))

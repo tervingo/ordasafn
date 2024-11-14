@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 
 
-function InflectionTableVerb({ data, translation, theme }) {
+function InflectionTableVerb({ data, translation, theme, isInfl, enteredWord }) {
   if (!data || !data[0] || !data[0].bmyndir) {
     return <p>No inflection data available for this verb.</p>;
   }
@@ -29,6 +29,12 @@ function InflectionTableVerb({ data, translation, theme }) {
     const form = bmyndir.find(b => b.g === `${voice}-SAGNB`);
     return form ? form.b : '-';
   };
+
+  // Function to determine if a cell should be highlighted
+  const shouldHighlight = (form) => {
+    return isInfl && form === enteredWord;
+  };
+
 
   const hasActiveParticiple = bmyndir.some(b => b.g === 'GM-SAGNB');
   const hasMiddleParticiple = bmyndir.some(b => b.g === 'MM-SAGNB');
@@ -96,7 +102,9 @@ function InflectionTableVerb({ data, translation, theme }) {
                 <TableCell>{getTenseName(tense)}</TableCell>
                 {numbers.map(number => (
                   persons.map(person => (
-                    <TableCell key={`${number}-${person}`}>
+                    <TableCell 
+                      key={`${number}-${person}`}  
+                      sx={{ color: shouldHighlight(getForm(voice, mood, tense, person, number)) ? 'yellow' : 'inherit'}}>
                       {getForm(voice, mood, tense, person, number)}
                     </TableCell>
                   ))
@@ -106,7 +114,7 @@ function InflectionTableVerb({ data, translation, theme }) {
           ))}
           <TableRow>
             <TableCell colSpan={2} sx={{ borderTop: 1 }}>Participle</TableCell>
-            <TableCell colSpan={2} sx={{ borderTop: 1, borderRight: 1 }}>{(voice === 'GM') ? activeParticiple : middleParticiple}</TableCell>
+            <TableCell colSpan={2} sx={{ borderTop: 1, borderRight: 1, color: shouldHighlight((voice === 'GM') ? activeParticiple : middleParticiple) ? 'yellow' : 'inherit'  }}>{(voice === 'GM') ? activeParticiple : middleParticiple}</TableCell>
           </TableRow>
 
         </TableBody>

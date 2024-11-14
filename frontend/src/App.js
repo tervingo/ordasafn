@@ -161,21 +161,21 @@ function App() {
     const category = selectedCategory.ofl_heiti;
     switch (category) {
       case 'nafnorð':
-        return <InflectionTableNoun data={inflectionData} translation={translation} />;
+        return <InflectionTableNoun data={inflectionData} translation={translation} isInfl={isInflectedForm} enteredWord={searchedWord}/>;
       case 'lýsingarorð':
-        return <InflectionTableAdjective data={inflectionData} translation={translation} />;
+        return <InflectionTableAdjective data={inflectionData} translation={translation}  isInfl={isInflectedForm} enteredWord={searchedWord}/>;
       case 'sagnorð':
-        return <InflectionTableVerb data={inflectionData} translation={translation} theme={theme} />;
+        return <InflectionTableVerb data={inflectionData} translation={translation} theme={theme} isInfl={isInflectedForm} enteredWord={searchedWord}/>;
       case 'töluorð':
-        return <InflectionTableNumeral data={inflectionData} translation={translation} />;
+        return <InflectionTableNumeral data={inflectionData} translation={translation} isInfl={isInflectedForm} enteredWord={searchedWord} />;
       case 'önnur fornöfn':
-        return <InflectionTableOtherPron data={inflectionData} translation={translation} />;
+        return <InflectionTableOtherPron data={inflectionData} translation={translation} isInfl={isInflectedForm} enteredWord={searchedWord} />;
       case 'greinir':
-          return <InflectionTableArticle data={inflectionData} translation={translation} />;
+          return <InflectionTableArticle data={inflectionData} translation={translation} isInfl={isInflectedForm} enteredWord={searchedWord}/>;
       case 'persónufornöfn':
-        return <InflectionTablePronoun data={inflectionData} translation={translation} />;
+        return <InflectionTablePronoun data={inflectionData} translation={translation} isInfl={isInflectedForm} enteredWord={searchedWord}/>;
       case 'raðtölur':
-        return <InflectionTableOrdinal data={inflectionData} translation={translation} />;
+        return <InflectionTableOrdinal data={inflectionData} translation={translation} isInfl={isInflectedForm} enteredWord={searchedWord}/>;
       default:
         return <OtherCatTable data={inflectionData} translation={translation} />;
     }
@@ -237,10 +237,11 @@ function App() {
                 size="large"
                 onClick={handleClear}
               >
-              Clear
+              Clear all
             </Button>
         </Box>
         {error && <Typography color="error" align="center">{error}</Typography>}
+        {isInflectedForm && <Typography color={theme.palette.primary.lightblue} align="center">"{searchedWord}" is an inflected form of "{lemmaForTranslation}"</Typography>}
         {lemmaForTranslation && <Translation word={lemmaForTranslation} onTranslate={handleTranslation} />}
         {showSelector && (
           <WordCategorySelector

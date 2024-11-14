@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import theme from './theme';
 
-function InflectionTablePronoun({ data, translation }) {
+function InflectionTablePronoun({ data, translation, isInfl, enteredWord }) {
   if (!data || !data[0] || !data[0].bmyndir) {
     return <p>No inflection data available for this adjective.</p>;
   }
@@ -20,6 +20,11 @@ const numbers = ['ET', 'FT'];
 const getForm = (casePrefix, number) => {
     const form = bmyndir.find(b => b.g === `${casePrefix}${number}`);
     return form ? form.b : '-';
+};
+
+// Function to determine if a cell should be highlighted
+const shouldHighlight = (form) => {
+  return isInfl && form === enteredWord;
 };
 
 const renderTable = () => (
@@ -65,7 +70,7 @@ const renderTable = () => (
             <TableRow key={casePrefix}>
             <TableCell>{getCaseName(casePrefix)}</TableCell>
             {numbers.map(number => (
-                <TableCell align="center" key={`${number}`}>
+                <TableCell align="center" key={`${number}`} sx={{color: shouldHighlight(getForm(casePrefix, number)) ? 'yellow' : 'inherit'}}>
                     {getForm(casePrefix, number)}
                 </TableCell>
             ))}

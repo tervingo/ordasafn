@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import theme from './theme';
 
-function InflectionTableNumeral({ data, translation }) {
+function InflectionTableNumeral({ data, translation, isInfl, enteredWord }) {
   if (!data || !data[0] || !data[0].bmyndir) {
     return <p>No inflection data available for this adjective.</p>;
   }
@@ -27,6 +27,12 @@ function InflectionTableNumeral({ data, translation }) {
         const form = bmyndir.find(b => b.g === `${gender}-${casePrefix}${number}`);
         return form ? form.b : '-';
     };
+
+    // Function to determine if a cell should be highlighted
+    const shouldHighlight = (form) => {
+      return isInfl && form === enteredWord;
+    };
+  
 
     const renderTable = () => (
         <TableContainer 
@@ -79,7 +85,7 @@ function InflectionTableNumeral({ data, translation }) {
                 <TableCell>{getCaseName(casePrefix)}</TableCell>
                 {numbers.map(number => (
                     genders.map(gender => (
-                    <TableCell key={`${number}-${gender}`}>
+                    <TableCell key={`${number}-${gender}`}  sx={{color: shouldHighlight(getForm(casePrefix, gender, number)) ? 'yellow' : 'inherit'}}>
                         {getForm(casePrefix, gender, number)}
                     </TableCell>
                     ))
