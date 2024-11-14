@@ -32,38 +32,16 @@ function App() {
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showSelector, setShowSelector] = useState(false);
+  const [isInflectedForm, setIsInflectedForm] = useState(false);
   const englishInputRef = React.useRef();
   const wordFormRef = React.useRef();
+  const [lemmaForTranslation, setLemmaForTranslation] = useState('');
 
   useEffect(() => {
-    initGA('G-1HQ324XQ5W'); // Replace with your Measurement ID
-    logPageView(); // Log initial page view
+    initGA('G-1HQ324XQ5W');
+    logPageView();
   }, []);
 
-
-  const handleSubmit = async (word) => {
-    setSearchedWord(word);
-    setError(null);
-    setSelectedCategory(null);
-    setShowSelector(false);
-    setInflectionData(null);
-    try {
-      const response = await axios.get(`https://bin.arnastofnun.is/api/ord/${word}`);
-      console.log('Fetched word data:', response.data);
-      
-      if (response.data.length > 1) {
-        setWordData(response.data);
-        setShowSelector(true);
-      } else if (response.data.length === 1) {
-        await fetchInflectionData(response.data[0].guid);
-      } else {
-        setError('No data found for the given word.');
-      }
-    } catch (err) {
-      setError('Error fetching data. Please try again.');
-      console.error('Error:', err);
-    }
-  };
 
   const fetchInflectionData = async (guid) => {
     try {
@@ -76,6 +54,73 @@ function App() {
       console.error('Error:', err);
     }
   };
+
+  const fetchLemmaData = async (word) => {
+    try {
+      const response = await axios.get(`https://bin.arnastofnun.is/api/ord/${word}`);
+      console.log('Fetched lemma data:', response.data);
+      return response.data;
+    } catch (err) {
+      console.error('Error fetching lemma data:', err);
+      return null;
+    }
+  };
+
+  const fetchInflectedFormData = async (word) => {
+    try {
+      const response = await axios.get(`https://bin.arnastofnun.is/api/beygingarmynd/${word}`);
+      console.log('Fetched inflected form data:', response.data);
+      return response.data;
+    } catch (err) {
+      console.error('Error fetching inflected form data:', err);
+      return null;
+    }
+  };
+
+  const handleSubmit = async (word) => {
+    setSearchedWord(word);
+    setError(null);
+    setSelectedCategory(null);
+    setShowSelector(false);
+    setInflectionData(null);
+    setIsInflectedForm(false);
+
+    try {
+      // First try as lemma
+      const lemmaData = await fetchLemmaData(word);
+      
+      if (lemmaData && lemmaData.length > 0 && lemmaData[0] !== "") {
+        setLemmaForTranslation(word); // For lemmas, use the word itself
+        if (lemmaData.length > 1) {
+          setWordData(lemmaData);
+          setShowSelector(true);
+        } else {
+          await fetchInflectionData(lemmaData[0].guid);
+        }
+      } else {
+        // If no lemma found, try as inflected form
+        const inflectedData = await fetchInflectedFormData(word);
+        
+        if (inflectedData && inflectedData.length > 0 && inflectedData[0] !== "") {
+          setIsInflectedForm(true);
+          // Use the lemma (ord) for translation
+          setLemmaForTranslation(inflectedData[0].ord);
+          if (inflectedData.length > 1) {
+            setWordData(inflectedData);
+            setShowSelector(true);
+          } else {
+            await fetchInflectionData(inflectedData[0].guid);
+          }
+        } else {
+          setError('No data found for the given word.');
+        }
+      }
+    } catch (err) {
+      setError('Error fetching data. Please try again.');
+      console.error('Error:', err);
+    }
+  };
+
 
   useEffect(() => {
     console.log('inflectionData updated:', inflectionData);
@@ -93,12 +138,16 @@ function App() {
     setError(null);
     setSelectedCategory(null);
     setShowSelector(false);
+    setIsInflectedForm(false);
+    setLemmaForTranslation('');
     englishInputRef.current?.clear();
     wordFormRef.current?.clear();
   };
 
   const handleCategorySelect = async (category) => {
     setShowSelector(false);
+    // Use the lemma (ord) for translation
+    setLemmaForTranslation(category.ord);
     await fetchInflectionData(category.guid);
   };
 
@@ -192,12 +241,13 @@ function App() {
             </Button>
         </Box>
         {error && <Typography color="error" align="center">{error}</Typography>}
-        {searchedWord && <Translation word={searchedWord} onTranslate={handleTranslation} />}
+        {lemmaForTranslation && <Translation word={lemmaForTranslation} onTranslate={handleTranslation} />}
         {showSelector && (
           <WordCategorySelector
             word={searchedWord}
             categories={wordData}
             onSelect={handleCategorySelect}
+            isInflectedForm={isInflectedForm}
           />
         )}
         {renderInflectionTable()}

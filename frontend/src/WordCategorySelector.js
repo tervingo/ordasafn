@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@mui/material';
 
-const WordCategorySelector = ({ word, categories, onSelect }) => {
+const WordCategorySelector = ({ word, categories, onSelect, isInflectedForm }) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -25,10 +25,18 @@ const WordCategorySelector = ({ word, categories, onSelect }) => {
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Choose a category for "{word}"</DialogTitle>
+      <DialogTitle>
+        {isInflectedForm 
+          ? `"${word}" could be an inflected form of:`
+          : `Choose a category for "${word}"`
+        }
+      </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          This word has multiple grammatical categories. Please select one:
+          {isInflectedForm
+            ? "Please select the base word you're looking for:"
+            : "This word has multiple grammatical categories. Please select one:"
+          }
         </DialogContentText>
         {categories.map((category, index) => (
           <Button 
@@ -38,7 +46,7 @@ const WordCategorySelector = ({ word, categories, onSelect }) => {
             variant="outlined" 
             style={{ margin: '8px 0' }}
           >
-            {getCat(category.ofl_heiti)}
+            {`${category.ord} - ${getCat(category.ofl_heiti)}${category.skyring ? ` (${category.skyring})` : ''}`}
           </Button>
         ))}
       </DialogContent>
