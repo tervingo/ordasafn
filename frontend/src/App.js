@@ -227,7 +227,7 @@ function App() {
               flexDirection: 'row',  // Arrange items horizontally
               alignItems: 'center',  // Center items vertically
               gap: 2,  // Add space between icon and text
-              mt: 2  // Add margin top if needed
+              mt: 10  // Add margin top if needed
             }}>
               <IcelandicFlagIcon sx={{ fontSize: 40, marginRight: 2 }} />
               <Typography variant="h3" component="h1" gutterBottom>
