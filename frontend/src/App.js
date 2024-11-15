@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { Container, Typography, Box, Button } from '@mui/material';
+import { Container, Typography, Box, Button, Card, CardMedia } from '@mui/material';
 import axios from 'axios';
 import theme from './theme';
 
@@ -199,10 +199,41 @@ function App() {
             justifyContent: 'center',
             width: '100%'
           }}>
-            <IcelandicFlagIcon sx={{ fontSize: 40, marginRight: 2 }} />
-            <Typography variant="h3" component="h1" gutterBottom>
-              Icelandic Morphological Information
-            </Typography>
+            <Box sx={{ 
+              display: 'flex',  // Create a new flex container
+              flexDirection: 'row',  // Arrange items horizontally
+              alignItems: 'center',  // Center items vertically
+              gap: 2,  // Add space between icon and text
+              mt: 2  // Add margin top if needed
+            }}>
+              <Typography variant="h5" gutterBottom color="labels"> 
+                Orðaskógur
+              </Typography>
+              <Card>
+                <CardMedia
+                  component="img"
+                  width="120"
+                  height="90"
+                  image="/images/ordaskogur.jpg"
+                  alt="Sample image"
+                  sx={{
+                    objectFit: 'cover',
+                  }}
+                />
+              </Card>
+            </Box>
+            <Box sx={{ 
+              display: 'flex',  // Create a new flex container
+              flexDirection: 'row',  // Arrange items horizontally
+              alignItems: 'center',  // Center items vertically
+              gap: 2,  // Add space between icon and text
+              mt: 2  // Add margin top if needed
+            }}>
+              <IcelandicFlagIcon sx={{ fontSize: 40, marginRight: 2 }} />
+              <Typography variant="h3" component="h1" gutterBottom>
+                Icelandic Morphological Information
+              </Typography>
+            </Box>
           </Box>
         </Box>      
         <Box sx={{ textAlign: 'center', mt: 2, mb: 6 }}>
@@ -228,8 +259,14 @@ function App() {
               gap: 6,                  // Increase gap between items (theme.spacing(6) = 48px)
               mb: 4 
               }}>
-            <EnglishWordInput ref={englishInputRef} onTranslationSelect={handleIcelandicTranslation} />
-            <WordForm ref={wordFormRef} onSubmit={handleSubmit} onClear={handleClear} />
+            <Box sx={{ display: 'flex', flexDirection: 'row', aligIntems: 'left', gap:5 }} >
+              <Typography variant="subtitle2" color="labels">Enter an English word to get is Icelandic translation and the corrresponding morphological informtion</Typography>
+              <EnglishWordInput ref={englishInputRef} onTranslationSelect={handleIcelandicTranslation} />
+            </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'row', aligIntems: 'left', gap:5 }} >
+              <Typography variant="subtitle2" color="labels">Enter an Icelandic word (either lemma or inflected form) to get its morphological information</Typography>
+              <WordForm ref={wordFormRef} onSubmit={handleSubmit} onClear={handleClear} />
+            </Box>
             <Button 
                 type="button" 
                 variant="outlined" 

@@ -24,6 +24,7 @@ const theme = createTheme({
           over: grey[100],
         },
         labels: {
+          main: grey[400],
           bgblue: blue[900],
           bggreen: green[900],
           bgorange: orange[900],
