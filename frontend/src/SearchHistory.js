@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { List, ListItem, ListItemButton, ListItemText, Paper, Typography, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -95,5 +95,5 @@ const SearchHistory = ({ searches, onSelectWord, onClearHistory }) => {
       </Paper>
     );
   };
-  
+
 export default SearchHistory;
