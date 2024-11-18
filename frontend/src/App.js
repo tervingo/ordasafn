@@ -20,6 +20,7 @@ import WordCategorySelector from './WordCategorySelector';
 import EnglishWordInput from './EnglishWordInput';
 import './ordasafn.css';
 import IcelandicFlagIcon from './IcelandicFlagIcon';
+import SearchHistory from './SearchHistory';
 import { initGA, logPageView } from './analytics';
 
 
@@ -36,12 +37,31 @@ function App() {
   const englishInputRef = React.useRef();
   const wordFormRef = React.useRef();
   const [lemmaForTranslation, setLemmaForTranslation] = useState('');
+  const [searches, setSearches] = useState([]);
 
   useEffect(() => {
     initGA('G-1HQ324XQ5W');
     logPageView();
   }, []);
 
+  useEffect(() => {
+    const history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
+    setSearches(history);
+  }, []);
+
+  const addToSearchHistory = (word) => {
+    const filteredHistory = searches.filter(item => item !== word);
+    const newHistory = [word, ...filteredHistory].slice(0, 20);
+    
+    // Update both localStorage and state
+    localStorage.setItem('searchHistory', JSON.stringify(newHistory));
+    setSearches(newHistory);
+  };
+
+  const clearSearchHistory = () => {
+    localStorage.removeItem('searchHistory');
+    setSearches([]);
+  };
 
   const fetchInflectionData = async (guid) => {
     try {
@@ -78,13 +98,15 @@ function App() {
   };
 
   const handleSubmit = async (word) => {
+    addToSearchHistory(word);
     setSearchedWord(word);
     setError(null);
     setSelectedCategory(null);
     setShowSelector(false);
     setInflectionData(null);
     setIsInflectedForm(false);
-
+    setLemmaForTranslation(''); // Clear previous translation word
+  
     try {
       // First try as lemma
       const lemmaData = await fetchLemmaData(word);
@@ -120,6 +142,7 @@ function App() {
       console.error('Error:', err);
     }
   };
+  
 
 
   useEffect(() => {
@@ -252,31 +275,56 @@ function App() {
         </Box>
 
         <Box sx={{ 
-              display: 'flex', 
-              justifyContent: 'center', 
-              flexDirection: 'column',  // Change to column layout
-              alignItems: 'center',     // Center items horizontally
-              gap: 6,                  // Increase gap between items (theme.spacing(6) = 48px)
-              mb: 4 
-              }}>
-            <Box sx={{ display: 'flex', flexDirection: 'row', aligIntems: 'left', gap:5 }} >
-              <Typography variant="subtitle2" color="labels">Enter an English word to get is Icelandic translation and the corrresponding morphological informtion</Typography>
+          display: 'flex', 
+          justifyContent: 'center', 
+          gap: 6,                  
+          mb: 4 
+        }}>
+          {/* Search History Sidebar */}
+          <Box sx={{ 
+            display: { xs: 'none', md: 'block' }, 
+            width: '200px',
+            flexShrink: 0
+          }}>
+            <SearchHistory 
+              searches={searches}
+              onSelectWord={handleSubmit}
+              onClearHistory={clearSearchHistory}
+            />
+          </Box>
+          <Box sx={{ 
+            display: 'flex', 
+            flexDirection: 'column',
+            alignItems: 'center',  // Add this to center the button
+            width: '100%'         // Add this to ensure full width for centering
+          }}>
+            <Box sx={{ display: 'flex', flexDirection: 'row', aligIntems: 'left', gap:5, mb:5 }} >
+              <Typography variant="subtitle2" color="labels">
+                Enter an English word to get is Icelandic translation and the corrresponding morphological informtion
+              </Typography>
               <EnglishWordInput ref={englishInputRef} onTranslationSelect={handleIcelandicTranslation} />
             </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'row', aligIntems: 'left', gap:5 }} >
-              <Typography variant="subtitle2" color="labels">Enter an Icelandic word (either lemma or inflected form) to get its morphological information</Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'row', aligIntems: 'left', gap:5, mb:7 }} >
+              <Typography variant="subtitle2" color="labels">
+                Enter an Icelandic word (either lemma or inflected form) to get its morphological information
+              </Typography>
               <WordForm ref={wordFormRef} onSubmit={handleSubmit} onClear={handleClear} />
             </Box>
-            <Button 
+            {/* Move the Clear button Box here and modify it */}
+            <Box sx={{ width: '200px', mt: 2 }}>
+              <Button 
                 type="button" 
                 variant="outlined" 
                 color="secondary"
                 size="large"
+                fullWidth
                 onClick={handleClear}
               >
-              Clear all
-            </Button>
-        </Box>
+                Clear all
+              </Button>
+            </Box>
+          </Box>
+        </Box>        
         {error && <Typography color="error" align="center">{error}</Typography>}
         {isInflectedForm && <Typography color={theme.palette.primary.lightblue} align="center">"{searchedWord}" is an inflected form of "{lemmaForTranslation}"</Typography>}
         {lemmaForTranslation && <Translation word={lemmaForTranslation} onTranslate={handleTranslation} />}
