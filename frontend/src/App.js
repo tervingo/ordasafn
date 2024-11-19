@@ -207,29 +207,26 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" sx={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+        {/* Top Panel */}
         <Box sx={{ 
-          display: 'flex', 
-          flexDirection: 'column', 
-          alignItems: 'center', 
-          mt: 4, 
-          mb: 2 
+          width: '100%',
+          padding: 2,
+          borderBottom: 1,
+          borderColor: 'divider'
         }}>
           <Box sx={{ 
             display: 'flex',
             flexDirection: 'column',  
             alignItems: 'center', 
-            justifyContent: 'center',
-            width: '100%'
           }}>
             <Box sx={{ 
-              display: 'flex',  // Create a new flex container
-              flexDirection: 'row',  // Arrange items horizontally
-              alignItems: 'center',  // Center items vertically
-              gap: 2,  // Add space between icon and text
-              mt: 2  // Add margin top if needed
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 2,
             }}>
-              <Typography variant="h5" gutterBottom color="labels"> 
+              <Typography variant="h5" color="labels"> 
                 Orðaskógur
               </Typography>
               <Card>
@@ -239,28 +236,25 @@ function App() {
                   height="90"
                   image="/images/ordaskogur.jpg"
                   alt="Sample image"
-                  sx={{
-                    objectFit: 'cover',
-                  }}
+                  sx={{ objectFit: 'cover' }}
                 />
               </Card>
             </Box>
+            
             <Box sx={{ 
-              display: 'flex',  // Create a new flex container
-              flexDirection: 'row',  // Arrange items horizontally
-              alignItems: 'center',  // Center items vertically
-              gap: 2,  // Add space between icon and text
-              mt: 10  // Add margin top if needed
+              display: 'flex',
+              alignItems: 'center',
+              gap: 2,
+              mt: 4
             }}>
-              <IcelandicFlagIcon sx={{ fontSize: 40, marginRight: 2 }} />
-              <Typography variant="h3" component="h1" gutterBottom>
+              <IcelandicFlagIcon sx={{ fontSize: 40 }} />
+              <Typography variant="h3" component="h1">
                 Icelandic Morphological Information
               </Typography>
             </Box>
-          </Box>
-        </Box>      
-        <Box sx={{ textAlign: 'center', mt: 2, mb: 6 }}>
-          <Typography variant="subtitle2" component="h2" gutterBottom sx={{ 
+  
+            <Typography variant="subtitle2" sx={{ 
+              mt: 2,
               color: theme.palette.labels.subtitle,
               '& a': {
                 color: theme.palette.link.default,
@@ -269,22 +263,29 @@ function App() {
                   textDecoration: 'underline',
                 },
               },
-            }} >
-            This tool uses the API provided by <a href="https://bin.arnastofnun.is" target='blank'>Beygingarlýsing íslenks nútímamáls</a> and the output from the <a href="https://is.glosbe.com" target="blank">Glosbe online dictionary</a>
-          </Typography>
+            }}>
+              This tool uses the API provided by <a href="https://bin.arnastofnun.is" target='blank'>Beygingarlýsing íslenks nútímamáls</a> and the output from the <a href="https://is.glosbe.com" target="blank">Glosbe online dictionary</a>
+            </Typography>
+          </Box>
         </Box>
-
+  
+        {/* Main Content Area - Split into sidebar and main panel */}
         <Box sx={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
-          gap: 6,                  
-          mb: 4 
+          display: 'flex',
+          flex: 1,
+          gap: 3,
+          mt: 3,
+          overflow: 'hidden' // Prevent content from causing page scroll
         }}>
-          {/* Search History Sidebar */}
+          {/* Left Sidebar - History Panel */}
           <Box sx={{ 
-            display: { xs: 'none', md: 'block' }, 
-            width: '200px',
-            flexShrink: 0
+            width: '250px',
+            flexShrink: 0,
+            overflowY: 'auto', // Allow scrolling if history is long
+            display: { xs: 'none', md: 'block' },
+            borderRight: 1,
+            borderColor: 'divider',
+            pr: 2
           }}>
             <SearchHistory 
               searches={searches}
@@ -292,54 +293,79 @@ function App() {
               onClearHistory={clearSearchHistory}
             />
           </Box>
+  
+          {/* Main Panel - Search Forms and Results */}
           <Box sx={{ 
-            display: 'flex', 
+            flex: 1,
+            display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',  // Add this to center the button
-            width: '100%'         // Add this to ensure full width for centering
+            gap: 3,
+            overflowY: 'auto' // Allow scrolling for results
           }}>
-            <Box sx={{ display: 'flex', flexDirection: 'row', aligIntems: 'left', gap:5, mb:5 }} >
-              <Typography variant="subtitle2" color="labels">
-                Enter an English word to get is Icelandic translation and the corrresponding morphological informtion
-              </Typography>
-              <EnglishWordInput ref={englishInputRef} onTranslationSelect={handleIcelandicTranslation} />
+            {/* Search Forms */}
+            <Box sx={{ 
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 3,
+              p: 2
+            }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+                <Typography variant="subtitle2" color="labels" sx={{ flex: 1 }}>
+                  Enter an English word to get its Icelandic translation and the corresponding morphological information
+                </Typography>
+                <EnglishWordInput 
+                  ref={englishInputRef} 
+                  onTranslationSelect={handleIcelandicTranslation}
+                />
+              </Box>
+  
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+                <Typography variant="subtitle2" color="labels" sx={{ flex: 1 }}>
+                  Enter an Icelandic word (either lemma or inflected form) to get its morphological information
+                </Typography>
+                <WordForm 
+                  ref={wordFormRef} 
+                  onSubmit={handleSubmit} 
+                  onClear={handleClear}
+                />
+              </Box>
+  
+              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                <Button 
+                  type="button" 
+                  variant="outlined" 
+                  color="secondary"
+                  size="large"
+                  onClick={handleClear}
+                >
+                  Clear all
+                </Button>
+              </Box>
             </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'row', aligIntems: 'left', gap:5, mb:7 }} >
-              <Typography variant="subtitle2" color="labels">
-                Enter an Icelandic word (either lemma or inflected form) to get its morphological information
-              </Typography>
-              <WordForm ref={wordFormRef} onSubmit={handleSubmit} onClear={handleClear} />
-            </Box>
-            {/* Move the Clear button Box here and modify it */}
-            <Box sx={{ width: '200px', mt: 2 }}>
-              <Button 
-                type="button" 
-                variant="outlined" 
-                color="secondary"
-                size="large"
-                fullWidth
-                onClick={handleClear}
-              >
-                Clear all
-              </Button>
+  
+            {/* Results Section */}
+            <Box sx={{ p: 2 }}>
+              {error && <Typography color="error" align="center">{error}</Typography>}
+              {isInflectedForm && (
+                <Typography color={theme.palette.primary.lightblue} align="center">
+                  "{searchedWord}" is an inflected form of "{lemmaForTranslation}"
+                </Typography>
+              )}
+              {lemmaForTranslation && <Translation word={lemmaForTranslation} onTranslate={handleTranslation} />}
+              {showSelector && (
+                <WordCategorySelector
+                  word={searchedWord}
+                  categories={wordData}
+                  onSelect={handleCategorySelect}
+                  isInflectedForm={isInflectedForm}
+                />
+              )}
+              {renderInflectionTable()}
             </Box>
           </Box>
-        </Box>        
-        {error && <Typography color="error" align="center">{error}</Typography>}
-        {isInflectedForm && <Typography color={theme.palette.primary.lightblue} align="center">"{searchedWord}" is an inflected form of "{lemmaForTranslation}"</Typography>}
-        {lemmaForTranslation && <Translation word={lemmaForTranslation} onTranslate={handleTranslation} />}
-        {showSelector && (
-          <WordCategorySelector
-            word={searchedWord}
-            categories={wordData}
-            onSelect={handleCategorySelect}
-            isInflectedForm={isInflectedForm}
-          />
-        )}
-        {renderInflectionTable()}
+        </Box>
       </Container>
     </ThemeProvider>
   );
-}
-
+};
 export default App;
