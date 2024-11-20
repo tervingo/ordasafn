@@ -232,8 +232,8 @@ function App() {
               <Card>
                 <CardMedia
                   component="img"
-                  width="120"
-                  height="90"
+                  width="100"
+                  height="70"
                   image="/images/ordaskogur.jpg"
                   alt="Sample image"
                   sx={{ objectFit: 'cover' }}
@@ -344,7 +344,7 @@ function App() {
             </Box>
   
             {/* Results Section */}
-            <Box sx={{ p: 2 }}>
+            <Box sx={{ p: 1 }}>
               {error && <Typography color="error" align="center">{error}</Typography>}
               {isInflectedForm && (
                 <Typography color={theme.palette.primary.lightblue} align="center">

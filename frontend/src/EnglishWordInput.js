@@ -101,15 +101,17 @@ const EnglishWordInput = forwardRef(({ onTranslationSelect }, ref) => {
           variant="outlined"
           size="small"
           disabled={loading}
+          sx={{ width: '300px' }}
         />
         <Button 
           type="submit" 
           variant="contained" 
           // disabled={loading || !englishWord.trim()}
           color="primary"
-          size="large"
+          size="small"
+          sx={{ width: '150px' }}
         >
-          Search Translations
+          Translations
         </Button>
     </Box>
       

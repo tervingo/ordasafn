@@ -56,7 +56,8 @@ const SearchHistory = ({ searches, onSelectWord, onClearHistory }) => {
         }}
       >
         <Typography 
-          variant="h6" 
+          variant="subtitle1"
+          color='labels'
           sx={{ 
             mb: 2,
             display: 'flex',

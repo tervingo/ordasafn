@@ -26,16 +26,17 @@ const WordForm = forwardRef(({ onSubmit, onClear }, ref) => {
         placeholder="Enter Icelandic word"
         label="Enter Icelandic word"
         variant="outlined"
-        size="medium"
+        size="small"
         sx={{ width: '300px' }}
       />
       <Button 
         type="submit" 
         variant="contained" 
         color="primary"
-        size="large"
-      >
-        Show Inflections
+        size="small"
+        sx={{ width: '150px' }}
+        >
+        Inflections
       </Button>
     </Box>
   );
