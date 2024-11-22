@@ -49,23 +49,29 @@ const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
 function LanguageSwitcher() {
   const { i18n } = useTranslation();
 
-  const changeLanguage = (event, newLanguage) => {
+  useEffect(() => {
+    // Define the function inside useEffect
+    const setDefaultLanguage = () => {
+      if (i18n.language !== 'en') {
+        i18n.changeLanguage('en');
+      }
+    };
+    
+    setDefaultLanguage();
+  }, [i18n]); // Only depend on i18n
+
+  const handleLanguageChange = (event, newLanguage) => {
     if (newLanguage !== null) {
       i18n.changeLanguage(newLanguage);
     }
   };
-
-  // Set default language to English on component mount
-  useEffect(() => {
-    changeLanguage(null, 'en');
-  }, []);
 
   return (
     <div className='language-switcher'>
       <ToggleButtonGroup
         value={i18n.language}
         exclusive
-        onChange={changeLanguage}
+        onChange={handleLanguageChange}
         aria-label="language switcher"
       >
         <StyledToggleButton value="en" aria-label="English">
@@ -78,7 +84,6 @@ function LanguageSwitcher() {
     </div>
   );
 }
-
 
 
 function App() {
