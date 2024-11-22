@@ -12,6 +12,26 @@
     "infl-info" : "Gefðu upp íslenkt orð (annaðhvort lemma eða beygingarform) til að fá beyginganna sinna",
     "searches": "Nýlega leitir",
     "no-searches": "Engar leitir",
+    "cat": {
+        "noun": "nafnorð",
+        "adj": "lýsingarorð",
+        "adv": "atviksorð",
+        "verb": "sagnorð",
+        "pron": "persónufornafn",
+        "oth-pron": "önnur fornöfn",
+        "defart": "greinir",
+        "num": "töluorð",
+        "ord": "raðtala",
+        "prep": "forsetning",
+        "conj": "samtenging",
+        "excl": "upphrópun"
+    },
+    "gender": {
+        "m": "kk",
+        "f": "kvk",
+        "n": "hk"
+    },
+    "more": "sjá meira...",
     "dummy": "dummy"
 
 }

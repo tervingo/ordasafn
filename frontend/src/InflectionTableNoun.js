@@ -6,8 +6,11 @@ import {
   Paper
 } from '@mui/material';
 import theme from './theme';
+import { useTranslation } from 'react-i18next';
 
 function InflectionTableNoun({ data, translation, isInfl, enteredWord }) {  // Add enteredWord prop
+  const { t } = useTranslation();
+
   if (!data || !data[0] || !data[0].bmyndir) {
     return <p>No hay datos de inflexión disponibles.</p>;
   }
@@ -27,7 +30,26 @@ function InflectionTableNoun({ data, translation, isInfl, enteredWord }) {  // A
     return isInfl && form === enteredWord;
   };
 
-  const nounDef = "noun - " + getGender(data[0].kyn);
+  function getCaseName(casePrefix) {
+    switch (casePrefix) {
+      case 'NF': return 'Nominative';
+      case 'ÞF': return 'Accusative';
+      case 'ÞGF': return 'Dative';
+      case 'EF': return 'Genitive';
+      default: return casePrefix;
+    }
+  }
+  
+  function getGender(kyn) {
+    switch (kyn) {
+      case 'kk': return t('gender.m');
+      case 'kvk': return t('gender.f');
+      case 'hk': return t('gender.n');
+      default: return kyn;
+    }
+  }
+  
+  const nounDef = t('cat.noun') + " - " + getGender(data[0].kyn);
   return (
     <Container maxWidth="md" style={{ paddingBottom: '100px' }}>
       <WordHeader 
@@ -104,25 +126,5 @@ function InflectionTableNoun({ data, translation, isInfl, enteredWord }) {  // A
     </Container>
   );
 }
-
-function getCaseName(casePrefix) {
-  switch (casePrefix) {
-    case 'NF': return 'Nominative';
-    case 'ÞF': return 'Accusative';
-    case 'ÞGF': return 'Dative';
-    case 'EF': return 'Genitive';
-    default: return casePrefix;
-  }
-}
-
-function getGender(kyn) {
-  switch (kyn) {
-    case 'kk': return 'm.';
-    case 'kvk': return 'f.';
-    case 'hk': return 'n.';
-    default: return kyn;
-  }
-}
-
 
 export default InflectionTableNoun;

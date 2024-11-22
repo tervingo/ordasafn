@@ -11,7 +11,27 @@
     "trans-info": "Enter an English word to get its Icelandic translation and the corresponding morphological information",
     "infl-info": "Enter an Icelandic word (either lemma or inflected form) to get its morphological information",
     "searches": "Recent searches",
-    "no-searches": "No searches", 
+    "no-searches": "No searches",
+    "cat": {
+        "noun": "noun",
+        "adj": "adjective",
+        "adv": "adverb",
+        "verb": "verb",
+        "pron": "personal pronoun",
+        "oth-pron": "other pronoun",
+        "defart": "definite article",
+        "num": "numeral",
+        "ord": "ordinal",
+        "prep": "preposition",
+        "conj": "conjunction",
+        "excl": "exclamation"
+    },
+    "gender": {
+        "m": "m",
+        "f": "f",
+        "n": "n"
+    },
+    "more": "see more...",
     "dummy": "dummy"
 
 }

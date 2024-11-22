@@ -5,9 +5,10 @@ import {
   Table, TableContainer, TableHead, TableBody, TableRow, TableCell, 
   Paper, Typography
 } from '@mui/material';
-
+import { useTranslation } from 'react-i18next';
 
 function InflectionTableVerb({ data, translation, theme, isInfl, enteredWord }) {
+  const { t } = useTranslation();
   if (!data || !data[0] || !data[0].bmyndir) {
     return <p>No inflection data available for this verb.</p>;
   }
@@ -126,7 +127,7 @@ function InflectionTableVerb({ data, translation, theme, isInfl, enteredWord }) 
     <Container maxWidth="md" style={{ paddingBottom: '100px' }}>
       <WordHeader 
         word={data[0].ord}
-        wordType="verb"
+        wordType={t('cat.verb')}
         translation={translation}
         theme={theme}
       />

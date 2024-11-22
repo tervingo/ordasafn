@@ -6,8 +6,10 @@ import {
   Paper
 } from '@mui/material';
 import theme from './theme';
+import { useTranslation } from 'react-i18next';
 
 function InflectionTablePronoun({ data, translation, isInfl, enteredWord }) {
+  const { t } = useTranslation();
   if (!data || !data[0] || !data[0].bmyndir) {
     return <p>No inflection data available for this adjective.</p>;
   }
@@ -85,7 +87,7 @@ return (
     <Container maxWidth="md" style={{ paddingBottom: '100px' }}>
       <WordHeader 
         word={data[0].ord}
-        wordType="pronoun"
+        wordType={t('cat.pron')}
         translation={translation}
         theme={theme}
       /> 

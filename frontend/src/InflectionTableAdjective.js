@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container } from '@mui/material';
 import WordHeader from './WordHeader';
+import { useTranslation } from 'react-i18next';
 
 import { 
   Table, TableContainer, TableHead, TableBody, TableRow, TableCell, 
@@ -9,6 +10,7 @@ import {
 import theme from './theme';
 
 function InflectionTableAdjective({ data, translation, isInfl, enteredWord }) {
+  const { t } = useTranslation();
   if (!data || !data[0] || !data[0].bmyndir) {
     return <p>No inflection data available for this adjective.</p>;
   }
@@ -96,7 +98,7 @@ function InflectionTableAdjective({ data, translation, isInfl, enteredWord }) {
   <Container maxWidth="md" style={{ paddingBottom: '100px' }}>
     <WordHeader 
       word={data[0].ord}
-      wordType="adjective"
+      wordType= {t('cat.adj')} 
       translation={translation}
       theme={theme}
     />       

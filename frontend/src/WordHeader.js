@@ -1,8 +1,10 @@
 import React from 'react';
 import { Box, Paper, Typography, Link } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 function WordHeader({ word, wordType, translation, theme }) {
   const glosbeUrl = `https://glosbe.com/is/en/${encodeURIComponent(word)}`;
+  const { t } = useTranslation();
 
   return (
     <Box sx={{ 
@@ -53,7 +55,7 @@ function WordHeader({ word, wordType, translation, theme }) {
                 },
               }}
             >
-              see more...
+              {t('more')}
             </Link>
           </Box>
         </Paper>
