@@ -1,8 +1,10 @@
 import React from 'react';
 import { List, ListItem, ListItemButton, ListItemText, Paper, Typography, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useTranslation } from 'react-i18next';
 
 const SearchHistory = ({ searches, onSelectWord, onClearHistory }) => {
+    const { t } = useTranslation();
     const handleClick = (word) => {
       onSelectWord(word);
     };
@@ -31,7 +33,7 @@ const SearchHistory = ({ searches, onSelectWord, onClearHistory }) => {
               alignItems: 'center'
             }}
           >
-            Recent Searches
+            {t('searches')}
             <IconButton 
               size="small" 
               onClick={handleClear}
@@ -41,7 +43,7 @@ const SearchHistory = ({ searches, onSelectWord, onClearHistory }) => {
             </IconButton>
           </Typography>
           <Typography variant="body2" sx={{ color: 'grey.500' }}>
-            No recent searches
+          {t('no-searches')}
           </Typography>
         </Paper>
       );
@@ -66,7 +68,7 @@ const SearchHistory = ({ searches, onSelectWord, onClearHistory }) => {
             alignItems: 'center'
           }}
         >
-          Recent Searches
+          {t('searches')}
           <IconButton 
             size="small" 
             onClick={handleClear}

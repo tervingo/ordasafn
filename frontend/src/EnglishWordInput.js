@@ -1,5 +1,7 @@
 import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import { TextField, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Box } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+
 
 // Helper function to decode HTML entities
 const decodeHTMLEntities = (html) => {
@@ -14,6 +16,8 @@ const EnglishWordInput = forwardRef(({ onTranslationSelect }, ref) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [open, setOpen] = useState(false);
+  const { t } = useTranslation();
+
 
   // Expose clear function to parent
   useImperativeHandle(ref, () => ({
@@ -97,7 +101,7 @@ const EnglishWordInput = forwardRef(({ onTranslationSelect }, ref) => {
         <TextField
           value={englishWord}
           onChange={(e) => setEnglishWord(e.target.value)}
-          label="Enter English word"
+          label={t('en-word')}
           variant="outlined"
           size="small"
           disabled={loading}
@@ -111,7 +115,7 @@ const EnglishWordInput = forwardRef(({ onTranslationSelect }, ref) => {
           size="small"
           sx={{ width: '150px' }}
         >
-          Translations
+          {t('translations')}
         </Button>
     </Box>
       

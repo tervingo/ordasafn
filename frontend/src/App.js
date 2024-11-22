@@ -2,8 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Container, Typography, Box, Button, Card, CardMedia } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { ToggleButtonGroup, ToggleButton } from '@mui/material';
+import { styled } from '@mui/material/styles';
+
 import axios from 'axios';
 import theme from './theme';
+import './ordasafn.css';
+import './i18n';
 
 import WordForm from './WordForm';
 import InflectionTableNoun from './InflectionTableNoun';
@@ -18,10 +24,60 @@ import OtherCatTable from './OtherCatTable';
 import Translation from './Translation';
 import WordCategorySelector from './WordCategorySelector';
 import EnglishWordInput from './EnglishWordInput';
-import './ordasafn.css';
 import IcelandicFlagIcon from './IcelandicFlagIcon';
 import SearchHistory from './SearchHistory';
 import { initGA, logPageView } from './analytics';
+
+
+
+// Custom styled ToggleButton
+const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
+  '&.MuiToggleButton-root': {
+    textTransform: 'none',
+    minWidth: '40px',
+    padding: '5px 10px',
+    backgroundColor: theme.palette.toggle.off,
+    border: `1px solid ${theme.palette.primary.main}`,
+    '&.Mui-selected': {
+      backgroundColor: theme.palette.toggle.on,
+      color: theme.palette.primary.contrastText,
+    },
+  },
+}));
+
+
+function LanguageSwitcher() {
+  const { i18n } = useTranslation();
+
+  const changeLanguage = (event, newLanguage) => {
+    if (newLanguage !== null) {
+      i18n.changeLanguage(newLanguage);
+    }
+  };
+
+  // Set default language to English on component mount
+  useEffect(() => {
+    changeLanguage(null, 'en');
+  }, []);
+
+  return (
+    <div className='language-switcher'>
+      <ToggleButtonGroup
+        value={i18n.language}
+        exclusive
+        onChange={changeLanguage}
+        aria-label="language switcher"
+      >
+        <StyledToggleButton value="en" aria-label="English">
+          EN
+        </StyledToggleButton>
+        <StyledToggleButton value="is" aria-label="Íslenska">
+          IS
+        </StyledToggleButton>
+      </ToggleButtonGroup>
+    </div>
+  );
+}
 
 
 
@@ -38,6 +94,7 @@ function App() {
   const wordFormRef = React.useRef();
   const [lemmaForTranslation, setLemmaForTranslation] = useState('');
   const [searches, setSearches] = useState([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     initGA('G-1HQ324XQ5W');
@@ -239,6 +296,7 @@ function App() {
                   sx={{ objectFit: 'cover' }}
                 />
               </Card>
+              <LanguageSwitcher />
             </Box>
             
             <Box sx={{ 
@@ -249,7 +307,7 @@ function App() {
             }}>
               <IcelandicFlagIcon sx={{ fontSize: 40 }} />
               <Typography variant="h3" component="h1">
-                Icelandic Morphological Information
+              {t('title')}
               </Typography>
             </Box>
   
@@ -264,7 +322,7 @@ function App() {
                 },
               },
             }}>
-              This tool uses the API provided by <a href="https://bin.arnastofnun.is" target='blank'>Beygingarlýsing íslenks nútímamáls</a> and the output from the <a href="https://is.glosbe.com" target="blank">Glosbe online dictionary</a>
+              {t('uses1')} <a href="https://bin.arnastofnun.is" target='blank'>Beygingarlýsing íslenks nútímamáls</a> {t('uses2')} <a href="https://is.glosbe.com" target="blank">{t('glosbe-link')}</a>
             </Typography>
           </Box>
         </Box>
@@ -311,7 +369,7 @@ function App() {
             }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
                 <Typography variant="subtitle2" color="labels" sx={{ flex: 1 }}>
-                  Enter an English word to get its Icelandic translation and the corresponding morphological information
+                  {t('trans-info')}
                 </Typography>
                 <EnglishWordInput 
                   ref={englishInputRef} 
@@ -321,7 +379,7 @@ function App() {
   
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
                 <Typography variant="subtitle2" color="labels" sx={{ flex: 1 }}>
-                  Enter an Icelandic word (either lemma or inflected form) to get its morphological information
+                {t('infl-info')}
                 </Typography>
                 <WordForm 
                   ref={wordFormRef} 
@@ -338,7 +396,7 @@ function App() {
                   size="large"
                   onClick={handleClear}
                 >
-                  Clear all
+                  {t('clear')}
                 </Button>
               </Box>
             </Box>

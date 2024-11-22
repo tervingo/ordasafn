@@ -1,0 +1,17 @@
+{
+    "title": "Icelandic Morphological Information",
+    "uses1": "This tool uses the API provided by ",
+    "uses2": " and the output from the ",
+    "glosbe-link": "Glosbe online dictionary",
+    "translations": "translations",
+    "inflections" : "inflections",
+    "en-word": "Enter English word",
+    "is-word": "Enter Icelandic word",
+    "clear": "Clear all",
+    "trans-info": "Enter an English word to get its Icelandic translation and the corresponding morphological information",
+    "infl-info": "Enter an Icelandic word (either lemma or inflected form) to get its morphological information",
+    "searches": "Recent searches",
+    "no-searches": "No searches", 
+    "dummy": "dummy"
+
+}

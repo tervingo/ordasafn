@@ -1,0 +1,17 @@
+{
+    "title": "Beygingarlýsing Íslensks",
+    "uses1": "Á þessu tæki notast API af ",
+    "uses2": " vefnum og úttak ",
+    "glosbe-link": "Glosbe orðabókarinnar á vefnum",
+    "translations": "þýðingar",
+    "inflections" : "beygingar",
+    "en-word": "Gefðu upp enskt orð",
+    "is-word": "Gefðu upp íslenskt orð",
+    "clear": "hreinsa allt",
+    "trans-info": "Gefðu upp enskt orð til að fá íslenska þýðinguna þess og samsvarandi beyginganna",
+    "infl-info" : "Gefðu upp íslenkt orð (annaðhvort lemma eða beygingarform) til að fá beyginganna sinna",
+    "searches": "Nýlega leitir",
+    "no-searches": "Engar leitir",
+    "dummy": "dummy"
+
+}
