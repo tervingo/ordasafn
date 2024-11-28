@@ -32,10 +32,10 @@ function InflectionTableNoun({ data, translation, isInfl, enteredWord }) {  // A
 
   function getCaseName(casePrefix) {
     switch (casePrefix) {
-      case 'NF': return 'Nominative';
-      case 'ÞF': return 'Accusative';
-      case 'ÞGF': return 'Dative';
-      case 'EF': return 'Genitive';
+      case 'NF': return t('case.nom');
+      case 'ÞF': return t('case.acc');
+      case 'ÞGF': return t('case.dat');
+      case 'EF': return t('case.gen');
       default: return casePrefix;
     }
   }
@@ -90,17 +90,17 @@ function InflectionTableNoun({ data, translation, isInfl, enteredWord }) {  // A
           >
             <TableHead>
               <TableRow>
-                <TableCell>Case</TableCell>
-                <TableCell>Sing Indef</TableCell>
-                <TableCell>Sing Def</TableCell>
-                <TableCell>Plur Indef</TableCell>
-                <TableCell>Plur Def</TableCell>
+                <TableCell>{t('case.label')}</TableCell>
+                <TableCell>{t('number.singindef')}</TableCell>
+                <TableCell>{t('number.singdef')}</TableCell>
+                <TableCell>{t('number.plurindef')}</TableCell>
+                <TableCell>{t('number.plurdef')}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {cases.map(casePrefix => (
                 <TableRow key={casePrefix}>
-                  <TableCell>{getCaseName(casePrefix)}</TableCell>
+                  <TableCell sx={{ color: theme.palette.labels.main}}>{getCaseName(casePrefix)}</TableCell>
                   {numbers.map(number => (
                     <React.Fragment key={number}>
                       {/* Indefinite form */}

@@ -21,7 +21,7 @@ const WordForm = forwardRef(({ onSubmit, onClear }, ref) => {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', gap: 2 }}>
+    <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection:'column', alignItems: 'center', gap: 2 }}>
       <TextField
         value={word}
         onChange={(e) => setWord(e.target.value)}

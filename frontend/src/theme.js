@@ -31,6 +31,7 @@ const theme = createTheme({
           tx: grey[100],
           watchout: orange[100],
           subtitle: grey[500],
+          title: blue[300]
         },
         link: {
           default: grey[400],

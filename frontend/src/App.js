@@ -311,7 +311,7 @@ function App() {
               mt: 4
             }}>
               <IcelandicFlagIcon sx={{ fontSize: 40 }} />
-              <Typography variant="h3" component="h1">
+              <Typography variant="h3" component="h1" sx={{ color: theme.palette.labels.title }}>
               {t('title')}
               </Typography>
             </Box>
@@ -368,21 +368,11 @@ function App() {
             {/* Search Forms */}
             <Box sx={{ 
               display: 'flex',
-              flexDirection: 'column',
+              flexDirection: 'row',
               gap: 3,
               p: 2
             }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-                <Typography variant="subtitle2" color="labels" sx={{ flex: 1 }}>
-                  {t('trans-info')}
-                </Typography>
-                <EnglishWordInput 
-                  ref={englishInputRef} 
-                  onTranslationSelect={handleIcelandicTranslation}
-                />
-              </Box>
-  
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
                 <Typography variant="subtitle2" color="labels" sx={{ flex: 1 }}>
                 {t('infl-info')}
                 </Typography>
@@ -391,20 +381,29 @@ function App() {
                   onSubmit={handleSubmit} 
                   onClear={handleClear}
                 />
-              </Box>
-  
-              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-                <Button 
-                  type="button" 
-                  variant="outlined" 
-                  color="secondary"
-                  size="large"
-                  onClick={handleClear}
-                >
-                  {t('clear')}
-                </Button>
-              </Box>
             </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
+                <Typography variant="subtitle2" color="labels" sx={{ flex: 1 }}>
+                  {t('trans-info')}
+                </Typography>
+                <EnglishWordInput 
+                  ref={englishInputRef} 
+                  onTranslationSelect={handleIcelandicTranslation}
+                />
+              </Box>
+            </Box>  
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+              <Button 
+                type="button" 
+                variant="outlined" 
+                color="secondary"
+                size="large"
+                onClick={handleClear}
+              >
+                {t('clear')}
+              </Button>
+            </Box>
+
   
             {/* Results Section */}
             <Box sx={{ p: 1 }}>

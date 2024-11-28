@@ -97,7 +97,7 @@ const EnglishWordInput = forwardRef(({ onTranslationSelect }, ref) => {
 
   return (
     <>
-      <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+      <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection:'column',  gap: 2, alignItems: 'center' }}>
         <TextField
           value={englishWord}
           onChange={(e) => setEnglishWord(e.target.value)}

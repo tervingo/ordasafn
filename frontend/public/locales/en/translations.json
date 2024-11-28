@@ -27,10 +27,45 @@
         "excl": "exclamation"
     },
     "gender": {
-        "m": "m",
-        "f": "f",
-        "n": "n"
+        "m": "masc",
+        "f": "fem",
+        "n": "neut"
     },
+    "case": {
+        "label": "Case",
+        "nom": "Nominative",
+        "acc": "Accusative",
+        "dat": "Dative",
+        "gen": "Genitive"
+    },
+    "number": {
+        "sing": "Singular",
+        "plur": "Plural",
+        "singdef": "Sing Def",
+        "singindef": "Sing Indef",
+        "plurdef": "Plur Def",
+        "plurindef": "Plur Indef"
+    },
+    "declension": {
+        "strong": "Strong declension",
+        "weak": "Weak declension"
+    },
+    "mood": {
+        "label": "Mood",
+        "ind": "Indicative",
+        "sub": "subjunctive"    
+    },
+    "tense": {
+        "label": "Tense",
+        "pres": "Present",
+        "past": "Past"
+    },
+    "voice": {
+        "label": "Voice",
+        "act": "Active Voice",
+        "med": "Middle Voice"
+    },
+    "papl": "Participle",
     "more": "see more...",
     "dummy": "dummy"
 

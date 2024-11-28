@@ -6,6 +6,7 @@ import {
   Paper, Typography
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 
 function InflectionTableVerb({ data, translation, theme, isInfl, enteredWord }) {
   const { t } = useTranslation();
@@ -31,6 +32,22 @@ function InflectionTableVerb({ data, translation, theme, isInfl, enteredWord }) 
     return form ? form.b : '-';
   };
 
+  function getMoodName(mood) {
+    switch (mood) {
+      case 'FH': return t('mood.ind');
+      case 'VH': return t('mood.sub');
+      default: return mood;
+    }
+  }
+  
+  function getTenseName(tense) {
+    switch (tense) {
+      case 'NT': return t('tense.pres');
+      case 'ÞT': return t('tense.past');
+      default: return tense;
+    }
+  }
+  
   // Function to determine if a cell should be highlighted
   const shouldHighlight = (form) => {
     return isInfl && form === enteredWord;
@@ -82,12 +99,12 @@ function InflectionTableVerb({ data, translation, theme, isInfl, enteredWord }) 
         <TableHead>
           <TableRow>
             <TableCell colSpan={2}></TableCell>
-            <TableCell align="center" colSpan={3}>SINGULAR</TableCell>
-            <TableCell align="center" colSpan={3}>PLURAL</TableCell>
+            <TableCell align="center" colSpan={3}>{t('number.sing').toUpperCase()}</TableCell>
+            <TableCell align="center" colSpan={3}>{t('number.plur').toUpperCase()}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell>Mood</TableCell>
-            <TableCell>Tense</TableCell>
+            <TableCell>{t('mood.label')}</TableCell>
+            <TableCell>{t('tense.label')}</TableCell>
             {numbers.map(number => (
               persons.map(person => (
                 <TableCell key={`${number}-${person}`}>{`${person}`}</TableCell>
@@ -99,8 +116,8 @@ function InflectionTableVerb({ data, translation, theme, isInfl, enteredWord }) 
           {moods.map(mood => (
             tenses.map(tense => (
               <TableRow key={`${mood}-${tense}`}>
-                <TableCell>{getMoodName(mood)}</TableCell>
-                <TableCell>{getTenseName(tense)}</TableCell>
+                <TableCell sx={{ color: theme.palette.labels.main}}>{getMoodName(mood)}</TableCell>
+                <TableCell sx={{ color: theme.palette.labels.main}}>{getTenseName(tense)}</TableCell>
                 {numbers.map(number => (
                   persons.map(person => (
                     <TableCell 
@@ -114,7 +131,7 @@ function InflectionTableVerb({ data, translation, theme, isInfl, enteredWord }) 
             ))
           ))}
           <TableRow>
-            <TableCell colSpan={2} sx={{ borderTop: 1 }}>Participle</TableCell>
+            <TableCell colSpan={2} sx={{ borderTop: 1, color: theme.palette.labels.main }}>{t('papl')}</TableCell>
             <TableCell colSpan={2} sx={{ borderTop: 1, borderRight: 1, color: shouldHighlight((voice === 'GM') ? activeParticiple : middleParticiple) ? 'yellow' : 'inherit'  }}>{(voice === 'GM') ? activeParticiple : middleParticiple}</TableCell>
           </TableRow>
 
@@ -133,12 +150,12 @@ function InflectionTableVerb({ data, translation, theme, isInfl, enteredWord }) 
       />
 
       
-      <Typography variant="h5" gutterBottom>Active Voice</Typography>
+      <Typography variant="h5" gutterBottom>{t('voice.act')}</Typography>
       {renderTable('GM')}
       
       {bmyndir.some(b => b.g.startsWith('MM')) && (
         <>
-          <Typography variant="h5" gutterBottom>Middle Voice</Typography>
+          <Typography variant="h5" gutterBottom>{t('voice.med')}</Typography>
           {renderTable('MM')}
         </>
       )}
@@ -146,21 +163,5 @@ function InflectionTableVerb({ data, translation, theme, isInfl, enteredWord }) 
   );
 }
 
-
-function getMoodName(mood) {
-  switch (mood) {
-    case 'FH': return 'Indicative';
-    case 'VH': return 'Subjunctive';
-    default: return mood;
-  }
-}
-
-function getTenseName(tense) {
-  switch (tense) {
-    case 'NT': return 'Present';
-    case 'ÞT': return 'Past';
-    default: return tense;
-  }
-}
 
 export default InflectionTableVerb;

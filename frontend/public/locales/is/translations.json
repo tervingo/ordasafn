@@ -31,6 +31,41 @@
         "f": "kvk",
         "n": "hk"
     },
+    "case": {
+        "label": "Fall",
+        "nom": "Nefnifall",
+        "acc": "Þolfall",
+        "dat": "Þágufall",
+        "gen": "Eignarfall"
+    },
+    "number": {
+        "sing": "Eintala",
+        "plur": "Fleirtala",
+        "singdef": "ET með greini",
+        "singindef": "ET án greinis",
+        "plurdef": "FT með greini",
+        "plurindef": "FT án greinis"
+    },
+    "declension": {
+        "strong": "Sterk beyging",
+        "weak": "Veik beyging"
+    },
+    "mood": {
+        "label": "Háttur",
+        "ind": "Framsöguháttur",
+        "sub": "Viðtengingarháttur"    
+    },
+    "tense": {
+        "label": "Tið",
+        "pres": "Nútið",
+        "past": "Þátið"
+    },
+    "voice": {
+        "label": "Rödd",
+        "act": "Germynd",
+        "med": "Miðmynd"
+    },
+    "papl": "Sagnbót",
     "more": "sjá meira...",
     "dummy": "dummy"
 

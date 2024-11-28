@@ -26,6 +26,26 @@ function InflectionTableAdjective({ data, translation, isInfl, enteredWord }) {
     return form ? form.b : '-';
   };
 
+  function getCaseName(casePrefix) {
+    switch (casePrefix) {
+      case 'NF': return t('case.nom');
+      case 'ÞF': return t('case.acc');
+      case 'ÞGF': return t('case.dat');
+      case 'EF': return t('case.gen');
+      default: return casePrefix;
+    }
+  }
+  
+  function getGenderName(gender) {
+    switch (gender) {
+      case 'KK': return t('gender.m');
+      case 'KVK': return t('gender.f');
+      case 'HK': return t('gender.n');
+      default: return gender;
+    }
+  }
+  
+
   // Function to determine if a cell should be highlighted
   const shouldHighlight = (form) => {
     return isInfl && form === enteredWord;
@@ -64,9 +84,9 @@ function InflectionTableAdjective({ data, translation, isInfl, enteredWord }) {
       >
         <TableHead>
           <TableRow>
-            <TableCell rowSpan={2}>CASE</TableCell>
-            <TableCell align="center" colSpan={3}>SINGULAR</TableCell>
-            <TableCell align="center" colSpan={3}>PLURAL</TableCell>
+            <TableCell rowSpan={2}>{t('case.label').toUpperCase()}</TableCell>
+            <TableCell align="center" colSpan={3}>{t('number.sing').toUpperCase()}</TableCell>
+            <TableCell align="center" colSpan={3}>{t('number.plur').toUpperCase()}</TableCell>
           </TableRow>
           <TableRow>
             {numbers.map(number => (
@@ -102,32 +122,14 @@ function InflectionTableAdjective({ data, translation, isInfl, enteredWord }) {
       translation={translation}
       theme={theme}
     />       
-      <Typography variant="h5" gutterBottom>Strong Declension</Typography>
+      <Typography variant="h5" gutterBottom>{t('declension.strong')}</Typography>
       {renderTable('FSB')}
       
-      <Typography variant="h5" gutterBottom>Weak Declension</Typography>
+      <Typography variant="h5" gutterBottom>{t('declension.weak')}</Typography>
       {renderTable('FVB')}
     </Container>
   );
 }
 
-function getCaseName(casePrefix) {
-  switch (casePrefix) {
-    case 'NF': return 'Nominative';
-    case 'ÞF': return 'Accusative';
-    case 'ÞGF': return 'Dative';
-    case 'EF': return 'Genitive';
-    default: return casePrefix;
-  }
-}
-
-function getGenderName(gender) {
-  switch (gender) {
-    case 'KK': return 'Masc.';
-    case 'KVK': return 'Fem.';
-    case 'HK': return 'Neut.';
-    default: return gender;
-  }
-}
 
 export default InflectionTableAdjective;
