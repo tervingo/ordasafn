@@ -6,7 +6,6 @@ import {
   Paper, Typography
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { t } from 'i18next';
 
 function InflectionTableVerb({ data, translation, theme, isInfl, enteredWord }) {
   const { t } = useTranslation();
