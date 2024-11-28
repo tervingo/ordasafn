@@ -24,6 +24,17 @@ const getForm = (casePrefix, number) => {
     return form ? form.b : '-';
 };
 
+function getCaseName(casePrefix) {
+  switch (casePrefix) {
+    case 'NF': return t('case.nom');
+    case 'ÞF': return t('case.acc');
+    case 'ÞGF': return t('case.dat');
+    case 'EF': return t('case.gen');
+    default: return casePrefix;
+  }
+}
+
+
 // Function to determine if a cell should be highlighted
 const shouldHighlight = (form) => {
   return isInfl && form === enteredWord;
@@ -62,9 +73,9 @@ const renderTable = () => (
     >
         <TableHead>
             <TableRow>
-                <TableCell rowSpan={2}>CASE</TableCell>
-                <TableCell align="center">SINGULAR</TableCell>
-                <TableCell align="center">PLURAL</TableCell>
+                <TableCell rowSpan={2}>{t('case.label').toUpperCase()}</TableCell>
+                <TableCell align="center">{t('number.sing').toUpperCase()}</TableCell>
+                <TableCell align="center">{t('number.plur').toUpperCase()}</TableCell>
             </TableRow>
         </TableHead>
         <TableBody>
@@ -96,15 +107,4 @@ return (
     );
   }
   
-
-function getCaseName(casePrefix) {
-  switch (casePrefix) {
-    case 'NF': return 'Nominative';
-    case 'ÞF': return 'Accusative';
-    case 'ÞGF': return 'Dative';
-    case 'EF': return 'Genitive';
-    default: return casePrefix;
-  }
-}
-
 export default InflectionTablePronoun;

@@ -410,7 +410,7 @@ function App() {
               {error && <Typography color="error" align="center">{error}</Typography>}
               {isInflectedForm && (
                 <Typography color={theme.palette.primary.lightblue} align="center">
-                  "{searchedWord}" is an inflected form of "{lemmaForTranslation}"
+                  "{searchedWord}" {t('inflform')} "{lemmaForTranslation}"
                 </Typography>
               )}
               {lemmaForTranslation && <Translation word={lemmaForTranslation} onTranslate={handleTranslation} />}
